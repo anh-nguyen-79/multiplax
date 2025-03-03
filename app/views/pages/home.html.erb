@@ -2,6 +2,22 @@
   <div class="row">
     <div class="col-md-6">
       <h1>Welcome to Multiplax</h1>
+      
+      <% if user_signed_in? %>
+        <div class="user-avatar-dropdown">
+          <div class="dropdown">
+            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="https://ui-avatars.com/api/?name=<%= current_user.email.first %>&background=random" alt="User Avatar" class="avatar-img">
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+              <%= link_to 'Account Settings', edit_user_registration_path, class: 'dropdown-item' %>
+              <div class="dropdown-divider"></div>
+              <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
+            </ul>
+          </div>
+        </div>
+      <% end %>
+      
       <div class="search-bar">
         <form action="/search" method="get">
           <input type="text" name="query" placeholder="Search..." required>
@@ -9,10 +25,12 @@
         </form>
       </div>
 
-      <div class="auth-links">
-        <%= link_to 'Log In', new_user_session_path, class: 'btn btn-primary' %>
+      <% if user_signed_in? %>
+        <!-- Le bouton de déconnexion est maintenant dans le menu déroulant de l'avatar -->
+      <% else %>
+        <%= link_to 'Login', new_user_session_path, class: 'btn btn-primary' %>
         <%= link_to 'Sign Up', new_user_registration_path, class: 'btn btn-secondary' %>
-      </div>
+      <% end %>
 
       <div class="marketplace">
         <h2>Featured Products</h2>
@@ -40,3 +58,23 @@
     </div>
   </div>
 </div>
+
+<style>
+  .user-avatar-dropdown {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+  }
+  
+  .avatar-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .dropdown-toggle::after {
+    display: none;
+  }
+</style>
