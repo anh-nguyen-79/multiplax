@@ -7,6 +7,10 @@ class CarsController < ApplicationController
     @car = Car.new
   end
 
+  def show
+    @car = Car.find(params[:id])
+  end
+
   def create
     @car = Car.new(car_params)
     if @car.save
@@ -18,7 +22,6 @@ class CarsController < ApplicationController
 
 private
   def car_params
-    params.require(:car).permit(:desc, :img, :price, :user)
+    params.require(:car).permit(:desc, :img, :user)
   end
 end
-≤

@@ -1,0 +1,15 @@
+<h1>Liste des voitures</h1>
+
+<div class="row">
+  <% @cars.each do |car| %>
+    <div class="col-md-4 mb-4">
+      <div class="card">
+        <img src="<%= car.img %>" class="card-img-top">
+        <div class="card-body">
+          <p class="card-text"><%= car.desc %></p>
+          <%= link_to 'Voir les détails', car_path(car), class: 'btn btn-primary' %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

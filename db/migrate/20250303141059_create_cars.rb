@@ -3,7 +3,6 @@ class CreateCars < ActiveRecord::Migration[7.1]
     create_table :cars do |t|
       t.string :desc
       t.string :img
-      # t.integer :price
       t.references :user, null: false, foreign_key: true
 
       t.timestamps
