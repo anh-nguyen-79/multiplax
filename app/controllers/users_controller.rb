@@ -16,6 +16,11 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
+  def destroy
+    current_user.destroy
+    redirect_to root_path, notice: 'Your account has been successfully deleted.'
+  end
+
   private
 
   def user_params
