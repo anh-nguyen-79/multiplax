@@ -1,25 +1,122 @@
-$primary-color: #ffffff;
-$secondary-color: #776666;
-$font-stack: Arial, sans-serif;
-
+/* Conteneur principal avec l'image de fond */
 .image-container {
-  width: 100%;
-  min-height: 100vh;
   background-image: url('Image.jpeg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Titre Multiplax */
+.header {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: white;
+  font-size: 36px;
+  font-weight: bold;
+  z-index: 2;
+}
+
+/* Conteneur de la barre de recherche */
+.search-bar-container {
+  width: 40%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  color: white;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 15px;
+  border-radius: 10px;
 }
 
-.search-bar {
+/* Barre de recherche */
+.search-bar-container form {
   width: 100%;
-  padding: 20px;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: right;
+  display: flex;
+  align-items: center;
+}
+
+.search-bar-container input {
+  flex-grow: 1;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  height: 40px;
+}
+
+/* Icône de la voiture */
+.search-icon {
+  width: 40px;
+  height: 40px;
+  background-image: url('icone.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  border-radius: 10px;
+  background-color: white;
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
   justify-content: center;
+}
+
+/* Conteneur des dates */
+.calendar-container {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+/* Wrapper pour chaque date */
+.calendar-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Labels "Start" et "End" */
+.calendar-wrapper label {
+  font-size: 16px;
+  font-weight: bold;
+  color: black;
+}
+
+/* Champs de date */
+.calendar-wrapper input {
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+/* Avatar utilisateur */
+.avatar-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* Icône de connexion en haut à droite */
+.login-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.login-btn img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
 }
