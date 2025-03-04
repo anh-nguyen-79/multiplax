@@ -1,8 +1,6 @@
 # Contrôleur qui gère les actions liées aux utilisateurs
 class UsersController < ApplicationController
-  # ...
-  
-  # Action pour créer un nouvel utilisateur
+
   def create
     # Initialise un nouvel utilisateur avec les paramètres fournis
     @user = User.new(user_params)
@@ -36,4 +34,4 @@ class UsersController < ApplicationController
     # Seuls les champs email, password et password_confirmation sont autorisés
     params.require(:user).permit(:email, :password, :password_confirmation)
   end
-end 
+end

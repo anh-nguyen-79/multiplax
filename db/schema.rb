@@ -25,6 +25,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_03_160214) do
     t.index ["user_id"], name: "index_cars_on_user_id"
   end
 
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -38,4 +39,5 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_03_160214) do
   end
 
   add_foreign_key "cars", "users"
+
 end
