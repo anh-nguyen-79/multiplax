@@ -1,23 +1,34 @@
+<!-- Container principal qui englobe tout le contenu de la page -->
 <div class="container">
   <div class="row">
     <div class="col-md-6">
+      <!-- Titre principal de la page d'accueil -->
       <h1>Welcome to Multiplax</h1>
       
+      <!-- Section conditionnelle qui s'affiche uniquement pour les utilisateurs connectés -->
       <% if user_signed_in? %>
+        <!-- Dropdown avec avatar utilisateur positionné en haut à droite -->
         <div class="user-avatar-dropdown">
           <div class="dropdown">
+            <!-- Bouton qui affiche l'avatar et déclenche le menu déroulant -->
             <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+              <!-- Avatar généré dynamiquement basé sur la première lettre de l'email de l'utilisateur -->
               <img src="https://ui-avatars.com/api/?name=<%= current_user.email.first %>&background=random" alt="User Avatar" class="avatar-img">
             </button>
+            <!-- Menu déroulant avec options utilisateur -->
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+              <!-- Lien vers la page de paramètres du compte -->
               <%= link_to 'Account Settings', edit_user_registration_path, class: 'dropdown-item' %>
+              <!-- Séparateur visuel dans le menu -->
               <div class="dropdown-divider"></div>
+              <!-- Bouton de déconnexion qui envoie une requête DELETE -->
               <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
             </ul>
           </div>
         </div>
       <% end %>
       
+      <!-- Barre de recherche -->
       <div class="search-bar">
         <form action="/search" method="get">
           <input type="text" name="query" placeholder="Search..." required>
@@ -25,28 +36,34 @@
         </form>
       </div>
 
+      <!-- Affichage conditionnel des boutons de connexion/inscription pour les visiteurs non connectés -->
       <% if user_signed_in? %>
-        <!-- Le bouton de déconnexion est maintenant dans le menu déroulant de l'avatar -->
+        <!-- Le bouton de déconnexion est dans le menu déroulant de l'avatar -->
       <% else %>
+        <!-- Liens de connexion et d'inscription pour les utilisateurs non authentifiés -->
         <%= link_to 'Login', new_user_session_path, class: 'btn btn-primary' %>
         <%= link_to 'Sign Up', new_user_registration_path, class: 'btn btn-secondary' %>
       <% end %>
 
+      <!-- Section marketplace avec produits en vedette -->
       <div class="marketplace">
         <h2>Featured Products</h2>
         <div class="product-list">
+          <!-- Premier produit -->
           <div class="product">
             <h3>Product 1</h3>
             <p>Description of product 1.</p>
             <p>Price: 10.00€</p>
             <button>Buy</button>
           </div>
+          <!-- Deuxième produit -->
           <div class="product">
             <h3>Product 2</h3>
             <p>Description of product 2.</p>
             <p>Price: 20.00€</p>
             <button>Buy</button>
           </div>
+          <!-- Troisième produit -->
           <div class="product">
             <h3>Product 3</h3>
             <p>Description of product 3.</p>
@@ -59,21 +76,25 @@
   </div>
 </div>
 
+<!-- Styles CSS intégrés pour le dropdown et l'avatar utilisateur -->
 <style>
+  /* Positionnement du dropdown avatar en haut à droite */
   .user-avatar-dropdown {
     position: absolute;
     top: 10px;
     right: 10px;
-    z-index: 1000;
+    z-index: 1000; /* Assure que le dropdown est au-dessus des autres éléments */
   }
   
+  /* Style de l'image avatar (circulaire) */
   .avatar-img {
     width: 40px;
     height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
+    border-radius: 50%; /* Rend l'avatar circulaire */
+    object-fit: cover; /* Assure que l'image remplit bien l'espace */
   }
   
+  /* Supprime la flèche par défaut du dropdown Bootstrap */
   .dropdown-toggle::after {
     display: none;
   }
