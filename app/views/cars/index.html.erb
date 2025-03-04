@@ -17,21 +17,21 @@
         <div class="col-md-4 mb-4">
           <div class="card">
             <% if car.images.attached? %>
-              <%= image_tag car.images.first, class: 'card-img-top', alt: "#{car.phase}" %>
+              <%= cl_image_tag car.images.first.key, class: 'card-img-top', alt: car.desc %>
             <% else %>
               <div class="card-img-top bg-light text-center py-5">No Image</div>
             <% end %>
-            
+
             <div class="card-body">
               <h5 class="card-title"><%= car.phase %></h5>
-              
+
               <p class="card-text">
                 <strong>Year:</strong> <%= car.year %><br>
                 <strong>Km:</strong> <%= car.km %><br>
                 <strong>Price:</strong> <%= number_to_currency(car.price, unit: "€") %><br>
                 <strong>Location:</strong> <%= car.location %>
               </p>
-              
+
               <%= link_to 'View Details', car_path(car), class: 'btn btn-info' %>
             </div>
           </div>
@@ -49,17 +49,17 @@
   .cars-container {
     margin-top: 20px;
   }
-  
+
   .card {
     height: 100%;
     transition: transform 0.3s;
   }
-  
+
   .card:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 20px rgba(0,0,0,0.1);
   }
-  
+
   .card-img-top {
     height: 200px;
     object-fit: cover;
