@@ -1,0 +1,3 @@
+<!-- Lien pour supprimer le compte utilisateur -->
+<!-- Utilise la méthode HTTP DELETE et affiche une boîte de dialogue de confirmation -->
+<%= link_to 'Delete Account', user_path(current_user), method: :delete, data: { confirm: 'Are you sure you want to delete your account?' } %> 
