@@ -27,6 +27,24 @@
       <div class="calendar-wrapper">
         <label for="end_date">End</label>
         <input type="date" id="end_date" name="end_date" required>
+
+      <!-- Affichage conditionnel des boutons de connexion/inscription pour les visiteurs non connectés -->
+      <% if user_signed_in? %>
+        <!-- Le bouton de déconnexion est dans le menu déroulant de l'avatar -->
+      <% else %>
+        <!-- Liens de connexion et d'inscription pour les utilisateurs non authentifiés -->
+        <%= link_to 'Login', new_user_session_path, class: 'btn btn-primary' %>
+        <%= link_to 'Sign Up', new_user_registration_path, class: 'btn btn-secondary' %>
+      <% end %>
+
+      <!-- Section pour ajouter une voiture - visible pour tous les utilisateurs -->
+      <div class="add-car">
+        <!-- Lien vers le formulaire de création d'une nouvelle voiture -->
+        <% if user_signed_in? %>
+          <%= link_to 'Add a car', new_car_path, class: 'btn btn-primary' %>
+        <% else %>
+          <%= link_to 'Add a car', new_user_session_path, class: 'btn btn-primary' %>
+        <% end %>
       </div>
     </div>
   </div>

@@ -1,0 +1,59 @@
+<!-- Titre de la page pour l'ajout d'une nouvelle voiture -->
+<h1>Add a New Car</h1>
+
+<!-- Affichage des erreurs de validation si présentes - avec style amélioré -->
+<% if @car.errors.any? %>
+  <div class="alert alert-danger">
+    <h4><%= pluralize(@car.errors.count, "error") %> prohibited this car from being saved:</h4>
+    <ul>
+      <% @car.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<!-- Formulaire utilisant simple_form pour la création d'une voiture -->
+<!-- La classe 'new_car' est ajoutée pour faciliter le ciblage CSS -->
+<%= simple_form_for @car, html: { class: 'new_car' } do |f| %>
+  <!-- Champ pour la phase/modèle de la voiture -->
+  <div class="field">
+    <%= f.input :phase %>
+  </div>
+
+  <!-- Champ pour la description détaillée de la voiture -->
+  <div class="field">
+    <%= f.input :description %>
+  </div>
+
+  <!-- Champ pour télécharger plusieurs images de la voiture -->
+  <div class="field">
+    <%= f.input :images, as: :file, input_html: { multiple: true } %>
+  </div>
+
+  <!-- Champ pour l'année de fabrication avec type number pour validation côté client -->
+  <div class="field">
+    <%= f.input :year, input_html: { type: 'number' } %>
+  </div>
+
+  <!-- Champ pour le kilométrage avec type number pour validation côté client -->
+  <div class="field">
+    <%= f.input :km, input_html: { type: 'number' } %>
+  </div>
+
+  <!-- Champ pour le prix avec type number et step pour permettre les décimales -->
+  <div class="field">
+    <%= f.input :price, input_html: { type: 'number', step: '0.01' } %>
+  </div>
+
+  <!-- Champ pour la localisation de la voiture -->
+  <div class="field">
+    <%= f.input :location %>
+  </div>
+
+  <!-- Bouton de retour vers la page d'accueil -->
+  <div class="actions">
+    <%= link_to 'Back', root_path, class: 'btn btn-secondary' %>
+    <%= f.submit 'Create Car', class: 'btn btn-primary' %>
+  </div>
+<% end %>
