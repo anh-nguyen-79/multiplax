@@ -1,15 +1,19 @@
-<h1>Liste des voitures</h1>
+<div class="container">
 
-<div class="row">
-  <% @cars.each do |car| %>
-    <div class="col-md-4 mb-4">
-      <div class="card">
-        <img src="<%= car.img %>" class="card-img-top">
-        <div class="card-body">
-          <p class="card-text"><%= car.desc %></p>
-          <%= link_to 'Voir les détails', car_path(car), class: 'btn btn-primary' %>
+  <h1 class="text-center my-4">🚗 Explore Our Cars 🔥</h1>
+
+  <div class="row g-4">
+    <% @cars.each do |car| %>
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm">
+          <%= cl_image_tag car.img.key, class: 'card-img-top', alt: car.desc %>
+          <div class="card-body d-flex flex-column">
+            <p class="card-text flex-grow-1"><%= car.desc %></p>
+            <%= link_to 'View Details', car_path(car), class: 'btn btn-primary mt-2' %>
+          </div>
         </div>
       </div>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
+
 </div>
