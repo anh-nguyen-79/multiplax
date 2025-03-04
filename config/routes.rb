@@ -18,8 +18,14 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
-  resources :cars, only: [:index, :show]
-
+  # Définition des routes pour les voitures
+  # Seules les actions index, show, new et create sont autorisées pour l'instant
+  # Cela permet de:
+  # - Voir la liste des voitures (index)
+  # - Voir les détails d'une voiture (show)
+  # - Afficher le formulaire de création (new)
+  # - Créer une nouvelle voiture (create)
+  resources :cars, only: [:index, :show, :new, :create]
 
   # Route explicite vers la page d'accueil
   get '/home', to: 'pages#home'

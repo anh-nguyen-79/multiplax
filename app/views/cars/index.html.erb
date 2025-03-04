@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="container">
 
   <h1 class="text-center my-4">🚗 Explore Our Cars 🔥</h1>
@@ -16,4 +17,72 @@
     <% end %>
   </div>
 
+=======
+<h1>Available Cars</h1>
+
+<% if notice %>
+  <div class="alert alert-success">
+    <%= notice %>
+  </div>
+<% end %>
+
+<div class="mb-4">
+  <%= link_to 'Add a New Car', new_car_path, class: 'btn btn-primary' %>
 </div>
+
+<div class="cars-container">
+  <% if @cars.any? %>
+    <div class="row">
+      <% @cars.each do |car| %>
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <% if car.images.attached? %>
+              <%= image_tag car.images.first, class: 'card-img-top', alt: "#{car.phase}" %>
+            <% else %>
+              <div class="card-img-top bg-light text-center py-5">No Image</div>
+            <% end %>
+            
+            <div class="card-body">
+              <h5 class="card-title"><%= car.phase %></h5>
+              
+              <p class="card-text">
+                <strong>Year:</strong> <%= car.year %><br>
+                <strong>Km:</strong> <%= car.km %><br>
+                <strong>Price:</strong> <%= number_to_currency(car.price, unit: "€") %><br>
+                <strong>Location:</strong> <%= car.location %>
+              </p>
+              
+              <%= link_to 'View Details', car_path(car), class: 'btn btn-info' %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="alert alert-info">
+      No cars available at the moment. Be the first to add one!
+    </div>
+  <% end %>
+>>>>>>> 83f011eab1010289b7ea720c336bfca0d2debb37
+</div>
+
+<style>
+  .cars-container {
+    margin-top: 20px;
+  }
+  
+  .card {
+    height: 100%;
+    transition: transform 0.3s;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  }
+  
+  .card-img-top {
+    height: 200px;
+    object-fit: cover;
+  }
+</style>
