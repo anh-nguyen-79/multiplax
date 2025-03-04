@@ -34,6 +34,61 @@ class CarsController < ApplicationController
     end
   end
 
+  # Action pour afficher le formulaire d'édition d'une voiture
+  # GET /cars/:id/edit
+  def edit
+    # Récupère la voiture à éditer par son ID
+    @car = Car.find(params[:id])
+    
+    # Vérification de sécurité: seul le propriétaire peut éditer sa voiture
+    # Si l'utilisateur n'est pas le propriétaire, redirection avec message d'erreur
+    unless @car.user == current_user
+      redirect_to cars_path, alert: "You are not authorized to edit this car."
+    end
+  end
+
+  # Action pour mettre à jour une voiture existante
+  # PATCH/PUT /cars/:id
+  def update
+    # Récupère la voiture à mettre à jour par son ID
+    @car = Car.find(params[:id])
+    
+    # Vérification de sécurité: seul le propriétaire peut mettre à jour sa voiture
+    # Si l'utilisateur n'est pas le propriétaire, redirection avec message d'erreur
+    # Le 'return' arrête l'exécution de la méthode immédiatement
+    unless @car.user == current_user
+      return redirect_to cars_path, alert: "You are not authorized to edit this car."
+    end
+
+    # Tentative de mise à jour avec les paramètres filtrés
+    if @car.update(car_params)
+      # Redirection vers la page de détails de la voiture avec message de succès
+      redirect_to car_path(@car), notice: 'Car was successfully updated.'
+    else
+      # En cas d'échec, affichage du formulaire avec les erreurs
+      flash.now[:alert] = "There were errors in your submission. Please check the form."
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  # Action pour supprimer une voiture
+  # DELETE /cars/:id
+  def destroy
+    # Récupère la voiture à supprimer par son ID
+    @car = Car.find(params[:id])
+    
+    # Vérification de sécurité: seul le propriétaire peut supprimer sa voiture
+    unless @car.user == current_user
+      return redirect_to cars_path, alert: "You are not authorized to delete this car."
+    end
+    
+    # Suppression de la voiture
+    @car.destroy
+    
+    # Redirection vers la liste des voitures avec message de confirmation
+    redirect_to cars_path, notice: "Car was successfully deleted."
+  end
+
   private
     # Méthode privée pour filtrer les paramètres autorisés
     # Cette méthode est utilisée pour prévenir les attaques de type mass assignment

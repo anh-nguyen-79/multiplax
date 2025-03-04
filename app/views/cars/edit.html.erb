@@ -1,0 +1,76 @@
+<!-- Titre de la page pour l'édition d'une voiture -->
+<h1>Edit Car</h1>
+
+<!-- Affichage des erreurs de validation si présentes - avec style Bootstrap -->
+<% if @car.errors.any? %>
+  <div class="alert alert-danger">
+    <h4><%= pluralize(@car.errors.count, "error") %> prohibited this car from being saved:</h4>
+    <ul>
+      <% @car.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<!-- Formulaire utilisant simple_form pour l'édition d'une voiture existante -->
+<!-- La classe 'edit_car' est ajoutée pour faciliter le ciblage CSS et JavaScript -->
+<%= simple_form_for @car, html: { class: 'edit_car' } do |f| %>
+  <!-- Champ pour la phase/modèle de la voiture - pré-rempli avec la valeur existante -->
+  <div class="field">
+    <%= f.input :phase %>
+  </div>
+
+  <!-- Champ pour la description détaillée de la voiture - pré-rempli avec la valeur existante -->
+  <div class="field">
+    <%= f.input :description %>
+  </div>
+
+  <!-- Section pour afficher les images actuellement associées à la voiture -->
+  <% if @car.images.attached? %>
+    <div class="field">
+      <label>Current Images</label>
+      <!-- Affichage en miniature des images existantes -->
+      <div class="current-images">
+        <% @car.images.each do |image| %>
+          <%= image_tag image, width: 100, height: 100 %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- Champ pour télécharger de nouvelles images qui remplaceront les existantes -->
+  <div class="field">
+    <%= f.input :images, as: :file, input_html: { multiple: true } %>
+    <!-- Message d'aide pour expliquer le comportement du champ d'upload -->
+    <small class="form-text text-muted">Upload new images to replace the existing ones</small>
+  </div>
+
+  <!-- Champ pour l'année de fabrication avec type number pour validation côté client -->
+  <div class="field">
+    <%= f.input :year, input_html: { type: 'number' } %>
+  </div>
+
+  <!-- Champ pour le kilométrage avec type number pour validation côté client -->
+  <div class="field">
+    <%= f.input :km, input_html: { type: 'number' } %>
+  </div>
+
+  <!-- Champ pour le prix avec type number et step pour permettre les décimales -->
+  <div class="field">
+    <%= f.input :price, input_html: { type: 'number', step: '0.01' } %>
+  </div>
+
+  <!-- Champ pour la localisation de la voiture -->
+  <div class="field">
+    <%= f.input :location %>
+  </div>
+
+  <!-- Boutons d'action pour annuler ou soumettre le formulaire -->
+  <div class="actions">
+    <!-- Lien pour annuler l'édition et retourner à la page de détails de la voiture -->
+    <%= link_to 'Cancel', car_path(@car), class: 'btn btn-secondary' %>
+    <!-- Bouton pour soumettre le formulaire et mettre à jour la voiture -->
+    <%= f.submit 'Update Car', class: 'btn btn-primary' %>
+  </div>
+<% end %> 
