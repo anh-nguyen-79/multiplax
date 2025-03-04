@@ -7,5 +7,7 @@ class AddDetailsToCars < ActiveRecord::Migration[7.1]
     add_column :cars, :km, :integer
     add_column :cars, :price, :decimal
     add_column :cars, :location, :string
+
+    add_reference :cars, :user, index: true, foreign_key: true
   end
 end
