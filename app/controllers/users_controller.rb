@@ -1,6 +1,6 @@
 # Contrôleur qui gère les actions liées aux utilisateurs
 class UsersController < ApplicationController
-  # ........
+
   def create
     # Initialise un nouvel utilisateur avec les paramètres fournis
     @user = User.new(user_params)

@@ -19,9 +19,16 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
+
+
+  resources :cars, only: [:index, :show] 
+
+
   # Définit les routes pour les actions utilisateur (création, nouveau, suppression)
   resources :users, only: [:new, :create, :destroy]
 
+
   # Route explicite vers la page d'accueil
   get '/home', to: 'pages#home'
+
 end
