@@ -17,14 +17,21 @@ Rails.application.routes.draw do
   # Commentaire explicatif sur la définition de la route racine
   # Defines the root path route ("/")
   # root "posts#index"
-
-
-
   resources :cars, only: [:index, :show]
 
-
-
-
+  resources :rentals, only: [
+    :index,
+    :show,
+    :new,
+    :create,
+    :edit,
+    :update,
+    :destroy
+  ] do
+    member do
+      patch :cancel
+    end
+  end
   # Route explicite vers la page d'accueil
   get '/home', to: 'pages#home'
 

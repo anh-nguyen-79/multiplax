@@ -1,6 +1,7 @@
 class CarsController < ApplicationController
   def index
     @cars = Car.all
+    @rentals = current_user.rentals if user_signed_in?
   end
 
   def new
