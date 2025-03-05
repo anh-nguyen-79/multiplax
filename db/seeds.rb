@@ -50,14 +50,13 @@ end
 
 puts "5 utilisateurs et 5 voitures ont été créés avec succès !"
 
-rentals = Rental.create!([
-  { user_id: users.first.id, car_id: cars.first.id, start_date: "2025-03-01", end_date: "2025-03-05", status: "confirmed", price: 100 },
-  { user_id: users.second.id, car_id: cars.second.id, start_date: "2025-03-02", end_date: "2025-03-06", status: "confirmed", price: 200 },
-  { user_id: users.third.id, car_id: cars.third.id, start_date: "2025-03-03", end_date: "2025-03-07", status: "confirmed", price: 300 },
-  { user_id: users.fourth.id, car_id: cars.fourth.id, start_date: "2025-03-04", end_date: "2025-03-08", status: "confirmed", price: 400 },
-  { user_id: users.fifth.id, car_id: cars.fifth.id, start_date: "2025-03-05", end_date: "2025-03-09", status: "confirmed", price: 500 }
-])
-puts " 5 locations ont été créées avec succès !"
+# rentals = Rental.create!([
+#   { user_id: users.first.id, car_id: cars.first.id, start_date: "2025-03-01", end_date: "2025-03-05", status: "confirmed", price: 100 },
+#   { user_id: users.second.id, car_id: cars.second.id, start_date: "2025-03-02", end_date: "2025-03-06", status: "confirmed", price: 200 },
+#   { user_id: users.third.id, car_id: cars.third.id, start_date: "2025-03-03", end_date: "2025-03-07", status: "confirmed", price: 300 },
+  # { user_id: users.fourth.id, car_id: cars.fourth.id, start_date: "2025-03-04", end_date: "2025-03-08", status: "confirmed", price: 400 },
+  # { user_id: users.fifth.id, car_id: cars.fifth.id, start_date: "2025-03-05", end_date: "2025-03-09", status: "confirmed", price: 500 }
+# ])
+# puts " 5 locations ont été créées avec succès !"
 
-met a jour les 5 voitures, il doivent avoir l'image suivant <img src="<%= asset_path 'fiat.webp' %>" alt="Photo de la voiture" width="300">
-
+# met a jour les 5 voitures, il doivent avoir l'image suivant <img src="<%= asset_path 'fiat.webp' %>" alt="Photo de la voiture" width="300">

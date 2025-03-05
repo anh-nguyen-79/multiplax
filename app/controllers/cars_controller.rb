@@ -4,7 +4,7 @@ class CarsController < ApplicationController
   def index
 
     @cars = Car.all
-    @rentals = current_user.rentals if user_signed_in?
+    # @rentals = current_user.rentals if user_signed_in?
 
   end
 
@@ -24,10 +24,10 @@ class CarsController < ApplicationController
   # POST /cars
   def create
     @car = Car.new(car_params)
-    
+
     # Associer l'utilisateur actuel à la voiture si l'utilisateur est connecté
     @car.user = current_user if user_signed_in?
-    
+
     if @car.save
       redirect_to cars_path, notice: 'Car was successfully created.'
     else
@@ -42,7 +42,7 @@ class CarsController < ApplicationController
   def edit
     # Récupère la voiture à éditer par son ID
     @car = Car.find(params[:id])
-    
+
     # Vérification de sécurité: seul le propriétaire peut éditer sa voiture
     # Si l'utilisateur n'est pas le propriétaire, redirection avec message d'erreur
     unless @car.user == current_user
@@ -55,7 +55,7 @@ class CarsController < ApplicationController
   def update
     # Récupère la voiture à mettre à jour par son ID
     @car = Car.find(params[:id])
-    
+
     # Vérification de sécurité: seul le propriétaire peut mettre à jour sa voiture
     # Si l'utilisateur n'est pas le propriétaire, redirection avec message d'erreur
     # Le 'return' arrête l'exécution de la méthode immédiatement
@@ -79,15 +79,15 @@ class CarsController < ApplicationController
   def destroy
     # Récupère la voiture à supprimer par son ID
     @car = Car.find(params[:id])
-    
+
     # Vérification de sécurité: seul le propriétaire peut supprimer sa voiture
     unless @car.user == current_user
       return redirect_to cars_path, alert: "You are not authorized to delete this car."
     end
-    
+
     # Suppression de la voiture
     @car.destroy
-    
+
     # Redirection vers la liste des voitures avec message de confirmation
     redirect_to cars_path, notice: "Car was successfully deleted."
   end

@@ -16,7 +16,9 @@
   <div class="search-bar-container">
     <form action="/search" method="get">
       <input type="text" name="query" placeholder="where do i want my multipla..." required>
-      <div class="search-icon" onclick="redirectToIndex();"></div>
+      <%= link_to cars_path do %>
+      <div class="search-icon"></div>
+      <% end %>
     </form>
 
     <div class="calendar-container">
