@@ -31,8 +31,20 @@
                 <strong>Price:</strong> <%= number_to_currency(car.price, unit: "€") %><br>
                 <strong>Location:</strong> <%= car.location %>
               </p>
+              
+              <!-- Boutons d'action -->
+              <div class="card-actions">
+                <%= link_to 'View Details', car_path(car), class: 'btn btn-info' %>
+                
+                <!-- Boutons d'édition et de suppression visibles uniquement pour le propriétaire -->
+                <% if user_signed_in? && car.user == current_user %>
+                  <%= link_to 'Edit', edit_car_path(car), class: 'btn btn-warning' %>
+                  <%= button_to 'Delete', car_path(car), method: :delete, 
+                               data: { turbo_confirm: 'Are you sure you want to delete this car?' }, 
+                               class: 'btn btn-danger mt-1' %>
+                <% end %>
+              </div>
 
-              <%= link_to 'View Details', car_path(car), class: 'btn btn-info' %>
             </div>
           </div>
         </div>
