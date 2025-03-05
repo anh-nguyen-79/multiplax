@@ -6,10 +6,11 @@ class CarsController < ApplicationController
     # @rentals = current_user.rentals if user_signed_in?
     # Vérifier si des voitures ont des coordonnées
     @markers = []
-    
+    @car = Car.new
+
     if @cars.any?
       geocoded_cars = @cars.geocoded
-      
+
       if geocoded_cars.any?
         @markers = geocoded_cars.map do |car|
           {
@@ -20,7 +21,7 @@ class CarsController < ApplicationController
         end
       end
     end
-    
+
     # Ajouter un log pour le débogage
     Rails.logger.debug "Markers: #{@markers.inspect}"
   end
@@ -114,9 +115,9 @@ class CarsController < ApplicationController
     lng = params[:lng].to_f
     lat = params[:lat].to_f
     distance = params[:distance].to_f
-    
+
     @cars = Car.near([lat, lng], distance)
-    
+
     @markers = @cars.map do |car|
       {
         lat: car.latitude,
@@ -124,7 +125,7 @@ class CarsController < ApplicationController
         info_window_html: render_to_string(partial: "info_window", locals: {car: car})
       }
     end
-    
+
     render json: @markers
   end
 
