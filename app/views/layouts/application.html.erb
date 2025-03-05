@@ -10,7 +10,11 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <%= yield %>
+  <body class="d-flex flex-column min-vh-100">
+    <%= render "shared/navbar" %>
+    <main class="flex-grow-1">
+      <%= yield %>
+    </main>
+    <%= render "shared/footer" %>
   </body>
 </html>
