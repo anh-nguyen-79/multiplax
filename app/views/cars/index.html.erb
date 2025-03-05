@@ -1,7 +1,7 @@
 <%= render "shared/navbar" %>
 <%= render 'shared/background' %>
 
-<h1 class="text-center my-4">🚗 Available Cars</h1>
+<h2 class="text-center my-4">🚗 Available Cars</h2>
 
 <% if notice %>
   <div class="alert alert-success text-center">
@@ -10,7 +10,7 @@
 <% end %>
 
 <div class="map-container">
-  <div 
+  <div
     data-controller="map"
     data-map-markers-value="<%= @markers.to_json %>"
     data-map-api-key-value="<%= ENV['MAPBOX_ACCESS_TOKEN'] %>"
@@ -18,15 +18,7 @@
   ></div>
 </div>
 
-<!-- Section pour ajouter une voiture - visible pour tous les utilisateurs -->
-      <div class="add-car">
-        <!-- Lien vers le formulaire de création d'une nouvelle voiture -->
-        <% if user_signed_in? %>
-          <%= link_to 'Add a car', new_car_path, class: 'btn btn-primary' %>
-        <% else %>
-          <%= link_to 'Add a car', new_user_session_path, class: 'btn btn-primary' %>
-        <% end %>
-      </div>
+
 
 <div class="container cars-container">
   <% if @cars.any? %>
@@ -61,51 +53,29 @@
                                class: 'btn btn-danger' %>
                 <% end %>
               </div>
-   <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>  <!-- Fin de la boucle each -->
     </div>
   <% else %>
     <div class="alert alert-info text-center">
       No cars available at the moment. Be the first to add one! 🚀
     </div>
-</div>
   <% end %>
 </div>
-</div>
-</div>
 
 
-
-
-
-
+<!-- Section pour ajouter une voiture - visible pour tous les utilisateurs -->
+      <div class="add-car">
+        <!-- Lien vers le formulaire de création d'une nouvelle voiture -->
+        <% if user_signed_in? %>
+          <%= link_to 'Add a car', new_car_path, class: 'btn btn-primary' %>
+        <% else %>
+          <%= link_to 'Add a car', new_user_session_path, class: 'btn btn-primary' %>
+        <% end %>
+      </div>
 
 <!-- Bouton pour voir les réservations -->
-
-
-<style>
-  .cars-container {
-    margin-top: 30px;
-  }
-
-  .card {
-    height: 100%;
-    border-radius: 15px;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-  }
-
-  .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-  }
-
-  .card-img-top {
-    height: 300px;
-    object-fit: cover;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-  }
-
-  .card-body {
-    padding: 15px;
-  }
- </style>
+<%# <div class="text-center my-4">
+  <%= link_to '📅 View Reservations', reservations_path, class: 'btn btn-primary btn-lg' %>
