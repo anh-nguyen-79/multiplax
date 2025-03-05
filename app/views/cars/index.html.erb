@@ -1,89 +1,94 @@
 
-<h1 class="text-center my-4">🚗 Available Cars</h1>
+  <h1 class="text-center my-4"> Available Cars</h1>
 
-<% if notice %>
-  <div class="alert alert-success text-center">
-    <%= notice %>
-  </div>
-<% end %>
-
-<div class="d-flex justify-content-center mb-4">
-  <%= link_to '➕ Add a New Car', new_car_path, class: 'btn btn-primary btn-lg px-4' %>
-</div>
-
-<div class="cars-container container">
-  <% if @cars.any? %>
-    <div class="row">
-      <% @cars.each do |car| %>
-        <div class="col-md-4 col-sm-6 mb-4">
-          <div class="card shadow-lg border-0">
-            <% if car.images.attached? %>
-              <%= cl_image_tag car.images.first.key, class: 'card-img-top', alt: car.desc %>
-            <% else %>
-              <div class="card-img-top d-flex align-items-center justify-content-center bg-secondary text-white" style="height: 200px;">
-                <span>No Image</span>
-              </div>
-            <% end %>
-
-            <div class="card-body text-center">
-              <h5 class="card-title fw-bold"><%= car.phase %></h5>
-
-              <p class="card-text text-muted">
-                <i class="fas fa-calendar-alt"></i> <strong>Year:</strong> <%= car.year %><br>
-                <i class="fas fa-road"></i> <strong>Km:</strong> <%= car.km %><br>
-                <i class="fas fa-euro-sign"></i> <strong>Price:</strong> <%= number_to_currency(car.price, unit: "€") %><br>
-                <i class="fas fa-map-marker-alt"></i> <strong>Location:</strong> <%= car.location %>
-              </p>
-
-              <%= link_to '🔍 View Details', car_path(car), class: 'btn btn-info w-100' %>
-            </div>
-          </div>
-        </div>
-      <% end %>
-    </div>
-  <% else %>
-    <div class="alert alert-info text-center">
-      No cars available at the moment. Be the first to add one! 🚀
+  <% if notice %>
+    <div class="alert alert-success text-center">
+      <%= notice %>
     </div>
   <% end %>
-</div>
 
-<style>
-  .cars-container {
-    margin-top: 30px;
-  }
 
-  .card {
-    height: 100%;
-    border-radius: 15px;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-  }
+  <div class="cars-container container">
+    <% if @cars.any? %>
+      <div class="row">
+        <% @cars.each do |car| %>
+          <div class="col-md-4 col-sm-6 mb-4">
+            <div class="card shadow-lg border-0">
+              <% if car.images.attached? %>
+                <%= cl_image_tag car.images.first.key, class: 'card-img-top', alt: car.desc %>
+              <% else %>
+                <div class="card-img-top d-flex align-items-center justify-content-center bg-secondary text-white" style="height: 200px;">
+                  <span>No Image</span>
+                </div>
+              <% end %>
 
-  .card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 24px rgba(0,0,0,0.15);
-  }
+              <div class="card-body text-center">
+                <h5 class="card-title fw-bold"><%= car.phase %></h5>
 
-  .card-img-top {
-    height: 220px;
-    object-fit: cover;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-  }
+                <p class="card-text text-muted">
+                  <i class="fas fa-calendar-alt"></i> <strong>Year:</strong> <%= car.year %><br>
+                  <i class="fas fa-road"></i> <strong>Km:</strong> <%= car.km %><br>
+                  <i class="fas fa-euro-sign"></i> <strong>Price:</strong> <%= number_to_currency(car.price, unit: "€") %><br>
+                  <i class="fas fa-map-marker-alt"></i> <strong>Location:</strong> <%= car.location %>
+                </p>
 
-  .btn {
-    font-size: 1rem;
-    font-weight: bold;
-    border-radius: 8px;
-  }
+                <%= link_to '🔍 View Details', car_path(car), class: 'btn btn-info w-100' %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="alert alert-info text-center">
+        No cars available at the moment. Be the first to add one! 🚀
+      </div>
+    <% end %>
+  </div>
 
-  .btn-info {
-    background-color: #007bff;
-    border-color: #007bff;
-  }
+  <div class="d-flex justify-content-center mb-4">
+    <%= link_to '➕ Add a New Car', new_car_path, class: 'btn btn-primary btn-lg px-4' %>
+  </div>
+  <style>
+    .cars-container {
+      margin-top: 30px;
+    }
 
-  .btn-info:hover {
-    background-color: #0056b3;
-    border-color: #0056b3;
-  }
-</style>
+    .card {
+      height: 100%;
+      border-radius: 15px;
+      transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+    }
+
+    .card-img-top {
+      height: 300px;
+      object-fit: cover;
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+    }
+
+    .card-body {
+      min-height: 150px; /* Ajuste la hauteur du texte */
+      padding: 15px;
+    }
+
+    .btn {
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 8px;
+    }
+
+    .btn-info {
+      background-color: #007bff;
+      border-color: #007bff;
+    }
+
+    .btn-info:hover {
+      background-color: #0056b3;
+      border-color: #0056b3;
+    }
+  </style>
