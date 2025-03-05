@@ -19,7 +19,11 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   
- resources :cars, only: [:index, :show, :new, :create, :edit, :update, :destroy]
+ resources :cars, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
+    collection do
+      get :nearby
+    end
+  end
   resources :rentals, only: [
     :index,
     :show,
