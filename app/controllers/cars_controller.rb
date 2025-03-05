@@ -109,6 +109,25 @@ class CarsController < ApplicationController
     redirect_to cars_path, notice: "Car was successfully deleted."
   end
 
+  # GET /cars/nearby
+  def nearby
+    lng = params[:lng].to_f
+    lat = params[:lat].to_f
+    distance = params[:distance].to_f
+    
+    @cars = Car.near([lat, lng], distance)
+    
+    @markers = @cars.map do |car|
+      {
+        lat: car.latitude,
+        lng: car.longitude,
+        info_window_html: render_to_string(partial: "info_window", locals: {car: car})
+      }
+    end
+    
+    render json: @markers
+  end
+
   private
     # Méthode privée pour filtrer les paramètres autorisés
     # Cette méthode est utilisée pour prévenir les attaques de type mass assignment
