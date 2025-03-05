@@ -10,9 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema[7.1].define(version: 2025_03_04_113606) do
-
+ActiveRecord::Schema[7.1].define(version: 2025_03_05_102254) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -54,10 +52,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_04_113606) do
     t.string "images"
     t.integer "year"
     t.integer "km"
-    t.decimal "price"
     t.string "location"
     t.bigint "user_id"
-
+    t.integer "price"
     t.index ["user_id"], name: "index_cars_on_user_id"
   end
 
