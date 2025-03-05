@@ -17,16 +17,16 @@
 .map-info-window {
   padding: 10px;
   max-width: 200px;
-  
+
   h2 {
     font-size: 16px;
     margin-bottom: 5px;
   }
-  
+
   p {
     margin-bottom: 5px;
   }
-  
+
   img {
     margin-top: 5px;
     border-radius: 4px;
@@ -44,3 +44,36 @@
 }
 
 
+// style pour le bouton "add a new car"
+.add-car {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+}
+
+
+.btn-custom {
+  background: linear-gradient(135deg, #d079d0, #5b9494, #000000);
+  color: white;
+  border-radius: 8px;
+  font-size: 1.4rem;
+  padding: 15px 30px;
+  border: 2px solid #fff;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.4);
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-custom:hover {
+  background: linear-gradient(135deg, #5fa3a3, #6c3c6c, #000000);
+  transform: scale(1.1);
+  box-shadow: 0 4px 25px rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  text-shadow: 2px 2px 8px rgba(255, 255, 255, 0.9);
+}
+
+.btn-custom:focus {
+  outline: none;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 1);
+}
