@@ -2,7 +2,10 @@ class CarsController < ApplicationController
   # Action pour afficher toutes les voitures
   # GET /cars
   def index
-    @cars = Car.all  # Récupère toutes les voitures de la base de données
+
+    @cars = Car.all
+    @rentals = current_user.rentals if user_signed_in?
+
   end
 
   # Action pour afficher le formulaire de création d'une nouvelle voiture

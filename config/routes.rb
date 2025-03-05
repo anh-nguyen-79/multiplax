@@ -18,6 +18,23 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
+  
+ resources :cars, only: [:index, :show, :new, :create, :edit, :update, :destroy]
+  resources :rentals, only: [
+    :index,
+    :show,
+    :new,
+    :create,
+    :edit,
+    :update,
+    :destroy
+  ] do
+    member do
+      patch :cancel
+    end
+  end
+
+
   # Définition des routes pour les voitures
   # Les actions autorisées sont:
   # - index: Afficher la liste de toutes les voitures
@@ -27,7 +44,7 @@ Rails.application.routes.draw do
   # - edit: Afficher le formulaire d'édition d'une voiture existante
   # - update: Traiter la soumission du formulaire d'édition
   # - destroy: Supprimer une voiture existante
-  resources :cars, only: [:index, :show, :new, :create, :edit, :update, :destroy]
+ 
 
   # Route explicite vers la page d'accueil
   get '/home', to: 'pages#home'
