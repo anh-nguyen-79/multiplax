@@ -1,15 +1,20 @@
 /* Conteneur principal avec l'image de fond */
 .image-container {
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+}
+
+.wrap-home {
   background-image: url('Image.jpeg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
   min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
   position: relative;
 }
 
@@ -23,10 +28,9 @@
   z-index: 2;
 }
 
-/* Conteneur de la barre de recherche */
 .search-bar-container {
   width: 40%;
-  display: flex;
+  display: center;
   flex-direction: column;
   align-items: center;
   background: rgba(255, 255, 255, 0.319);
@@ -34,11 +38,11 @@
   border-radius: 10px;
 }
 
-/* Barre de recherche */
 .search-bar-container form {
   width: 100%;
   display: flex;
   align-items: center;
+  position: center;
 }
 
 .search-bar-container input {
@@ -49,7 +53,6 @@
   height: 40px;
 }
 
-/* Icône de la voiture */
 .search-icon {
   width: 40px;
   height: 40px;
@@ -66,7 +69,6 @@
   justify-content: center;
 }
 
-/* Conteneur des dates */
 .calendar-container {
   display: flex;
   gap: 20px;
@@ -75,47 +77,27 @@
   margin-top: 10px;
 }
 
-/* Wrapper pour chaque date */
 .calendar-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* Labels "Start" et "End" */
 .calendar-wrapper label {
   font-size: 16px;
   font-weight: bold;
   color: black;
 }
 
-/* Champs de date */
+
 .calendar-wrapper input {
   padding: 5px;
   border-radius: 5px;
   border: 1px solid #ccc;
 }
 
-/* Avatar utilisateur */
-.avatar-img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-/* Icône de connexion en haut à droite */
-.login-btn {
+.footer {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-}
-
-.login-btn img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+  bottom: 0;
+  width: 100%;
 }
