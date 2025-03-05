@@ -45,7 +45,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_05_120448) do
   create_table "cars", force: :cascade do |t|
     t.string "desc"
     t.string "img"
-    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "phase"
@@ -54,6 +53,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_05_120448) do
     t.integer "year"
     t.integer "km"
     t.string "location"
+    t.bigint "user_id"
     t.integer "price"
     t.float "latitude"
     t.float "longitude"
