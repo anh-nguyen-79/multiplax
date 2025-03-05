@@ -1,8 +1,14 @@
 <h1>✏ Modifier la réservation</h1>
 
 <p><strong>Voiture :</strong> <%= @car.desc %></p>
-<img src="<%= asset_path @car.img %>" alt="Photo de la voiture" width="300">
-
+<div class="text-center">
+        <% if @car.images.attached? && @car.images.first.present? %>
+          <%= cl_image_tag @car.images.first.key, class: "img-fluid rounded", style: " max-height: 250px; object-fit: cover;" %>
+        <% else %>
+          <img src="<%= asset_path 'default_car.png' %>" alt="Image par défaut" class="img-fluid rounded" style="width: 100%; max-height: 250px; object-fit: cover;">
+        <% end %>
+      </div>
+    </div>
 <%= form_with model: @rental, url: rental_path(@rental), method: :patch do |f| %>
   <div>
     <%= f.label :start_date, "Date de début" %>
