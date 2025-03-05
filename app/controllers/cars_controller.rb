@@ -5,6 +5,13 @@ class CarsController < ApplicationController
 
     @cars = Car.all
     # @rentals = current_user.rentals if user_signed_in?
+    # The `geocoded` scope filters only cs with coordinates
+    @markers = @cars.geocoded.map do |car|
+        {
+          lat: car.latitude,
+          lng: car.longitude
+        }
+      end
 
   end
 

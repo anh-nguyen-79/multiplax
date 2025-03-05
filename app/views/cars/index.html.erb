@@ -8,6 +8,11 @@
   </div>
 <% end %>
 
+<div style="width: 100%; height: 600px;"
+  data-controller="map"
+  data-map-markers-value="<%= @markers.to_json %>"
+  data-map-api-key-value="<%= ENV['MAPBOX_ACCESS_TOKEN'] %>"></div>
+
 <div class="container cars-container">
   <% if @cars.any? %>
     <div class="row row-cols-1 row-cols-md-3 g-4">
