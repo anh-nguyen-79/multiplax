@@ -19,13 +19,15 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   # Définition des routes pour les voitures
-  # Seules les actions index, show, new et create sont autorisées pour l'instant
-  # Cela permet de:
-  # - Voir la liste des voitures (index)
-  # - Voir les détails d'une voiture (show)
-  # - Afficher le formulaire de création (new)
-  # - Créer une nouvelle voiture (create)
-  resources :cars, only: [:index, :show, :new, :create]
+  # Les actions autorisées sont:
+  # - index: Afficher la liste de toutes les voitures
+  # - show: Afficher les détails d'une voiture spécifique
+  # - new: Afficher le formulaire de création d'une nouvelle voiture
+  # - create: Traiter la soumission du formulaire de création
+  # - edit: Afficher le formulaire d'édition d'une voiture existante
+  # - update: Traiter la soumission du formulaire d'édition
+  # - destroy: Supprimer une voiture existante
+  resources :cars, only: [:index, :show, :new, :create, :edit, :update, :destroy]
 
   # Route explicite vers la page d'accueil
   get '/home', to: 'pages#home'

@@ -25,25 +25,37 @@
               <div class="card-body text-center">
                 <h5 class="card-title fw-bold"><%= car.phase %></h5>
 
-                <p class="card-text text-muted">
-                  <i class="fas fa-calendar-alt"></i> <strong>Year:</strong> <%= car.year %><br>
-                  <i class="fas fa-road"></i> <strong>Km:</strong> <%= car.km %><br>
-                  <i class="fas fa-euro-sign"></i> <strong>Price:</strong> <%= number_to_currency(car.price, unit: "€") %><br>
-                  <i class="fas fa-map-marker-alt"></i> <strong>Location:</strong> <%= car.location %>
-                </p>
+              <p class="card-text">
+                <strong>Year:</strong> <%= car.year %><br>
+                <strong>Km:</strong> <%= car.km %><br>
+                <strong>Price:</strong> <%= number_to_currency(car.price, unit: "€") %><br>
+                <strong>Location:</strong> <%= car.location %>
+              </p>
 
-                <%= link_to '🔍 View Details', car_path(car), class: 'btn btn-info w-100' %>
+              <!-- Boutons d'action -->
+              <div class="card-actions">
+                <%= link_to 'View Details', car_path(car), class: 'btn btn-info' %>
+
+                <!-- Boutons d'édition et de suppression visibles uniquement pour le propriétaire -->
+                <% if user_signed_in? && car.user == current_user %>
+                  <%= link_to 'Edit', edit_car_path(car), class: 'btn btn-warning' %>
+                  <%= button_to 'Delete', car_path(car), method: :delete,
+                               data: { turbo_confirm: 'Are you sure you want to delete this car?' },
+                               class: 'btn btn-danger mt-1' %>
+                <% end %>
               </div>
+
             </div>
           </div>
-        <% end %>
-      </div>
-    <% else %>
-      <div class="alert alert-info text-center">
-        No cars available at the moment. Be the first to add one! 🚀
-      </div>
-    <% end %>
-  </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="alert alert-info">
+      No cars available at the moment. Be the first to add one!
+    </div>
+  <% end %>
+</div>
 
   <div class="d-flex justify-content-center mb-4">
     <%= link_to '➕ Add a New Car', new_car_path, class: 'btn btn-primary btn-lg px-4' %>

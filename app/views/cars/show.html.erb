@@ -1,3 +1,72 @@
-<p><strong>Description :</strong> <%= @car.desc %></p>
-<%= button_to "Louer cette voiture", car_path(@car), method: :post, class: "btn btn-primary" %>
-<%= link_to "Retour à la liste des voitures", cars_path, class: "btn btn-secondary mt-2" %>
+<div class="container mt-4">
+  <% if notice %>
+    <div class="alert alert-success">
+      <%= notice %>
+    </div>
+  <% end %>
+
+  <div class="car-details">
+    <h1><%= @car.phase %></h1>
+    
+    <!-- Images de la voiture -->
+    <div class="car-images mb-4">
+      <% if @car.images.attached? %>
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <% @car.images.each_with_index do |image, index| %>
+              <div class="carousel-item <%= 'active' if index == 0 %>">
+                <%= image_tag image, class: 'd-block w-100', style: 'height: 400px; object-fit: cover;' %>
+              </div>
+            <% end %>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      <% else %>
+        <div class="no-image bg-light text-center py-5">No Images Available</div>
+      <% end %>
+    </div>
+    
+    <!-- Détails de la voiture -->
+    <div class="car-info">
+      <div class="row">
+        <div class="col-md-6">
+          <h3>Details</h3>
+          <ul class="list-group">
+            <li class="list-group-item"><strong>Year:</strong> <%= @car.year %></li>
+            <li class="list-group-item"><strong>Kilometers:</strong> <%= @car.km %></li>
+            <li class="list-group-item"><strong>Price:</strong> <%= number_to_currency(@car.price, unit: "€") %></li>
+            <li class="list-group-item"><strong>Location:</strong> <%= @car.location %></li>
+          </ul>
+        </div>
+        <div class="col-md-6">
+          <h3>Description</h3>
+          <div class="card">
+            <div class="card-body">
+              <%= @car.description %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Boutons d'action -->
+    <div class="actions mt-4">
+      <%= link_to 'Back to Cars', cars_path, class: 'btn btn-secondary' %>
+      
+      <!-- Boutons d'édition et de suppression visibles uniquement pour le propriétaire -->
+      <% if user_signed_in? && @car.user == current_user %>
+        <%= link_to 'Edit Car', edit_car_path(@car), class: 'btn btn-warning' %>
+        <%= button_to 'Delete Car', car_path(@car), method: :delete, 
+                     data: { turbo_confirm: 'Are you sure you want to delete this car? This action cannot be undone.' }, 
+                     class: 'btn btn-danger mt-2' %>
+      <% end %>
+    </div>
+  </div>
+</div>
