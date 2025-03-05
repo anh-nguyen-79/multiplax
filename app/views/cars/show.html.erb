@@ -5,22 +5,22 @@
 
 <div class="container mt-4">
   <% if notice %>
-    <div class="alert alert-success">
+    <div class="alert alert-success text-center">
       <%= notice %>
     </div>
   <% end %>
 
-  <div class="car-details">
-    <h1><%= @car.phase %></h1>
-    
+  <div class="car-details bg-light p-4 rounded-3 shadow-lg">
+    <h1 class="text-center text-primary fw-bold mb-4"><%= @car.phase %></h1>
+
     <!-- Images de la voiture -->
     <div class="car-images mb-4">
       <% if @car.images.attached? %>
-        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+        <div id="carouselExampleControls" class="carousel slide rounded-3 shadow-sm" data-bs-ride="carousel">
           <div class="carousel-inner">
             <% @car.images.each_with_index do |image, index| %>
               <div class="carousel-item <%= 'active' if index == 0 %>">
-                <%= image_tag image, class: 'd-block w-100', style: 'height: 400px; object-fit: cover;' %>
+                <%= image_tag image, class: 'd-block w-100', style: 'height: 450px; object-fit: cover; border-radius: 12px;' %>
               </div>
             <% end %>
           </div>
@@ -34,15 +34,15 @@
           </button>
         </div>
       <% else %>
-        <div class="no-image bg-light text-center py-5">No Images Available</div>
+        <div class="no-image bg-light text-center py-5 rounded-3 shadow-sm">No Images Available</div>
       <% end %>
     </div>
-    
+
     <!-- Détails de la voiture -->
-    <div class="car-info">
+    <div class="car-info mb-4">
       <div class="row">
         <div class="col-md-6">
-          <h3>Details</h3>
+          <h3 class="text-primary">Details</h3>
           <ul class="list-group">
             <li class="list-group-item"><strong>Year:</strong> <%= @car.year %></li>
             <li class="list-group-item"><strong>Kilometers:</strong> <%= @car.km %></li>
@@ -51,27 +51,28 @@
           </ul>
         </div>
         <div class="col-md-6">
-          <h3>Description</h3>
-          <div class="card">
+          <h3 class="text-primary">Description</h3>
+          <div class="card shadow-sm">
             <div class="card-body">
-              <%= @car.description %>
+              <p class="text-muted"><%= @car.description %></p>
             </div>
           </div>
         </div>
       </div>
     </div>
-    
+
     <!-- Boutons d'action -->
-    <div class="actions mt-4">
-      <%= link_to 'Back to Cars', cars_path, class: 'btn btn-secondary' %>
-      
+    <div class="actions mt-4 d-flex justify-content-start">
+      <%= link_to '⬅ Back to Cars', cars_path, class: 'btn btn-secondary me-2' %>
+
       <!-- Boutons d'édition et de suppression visibles uniquement pour le propriétaire -->
       <% if user_signed_in? && @car.user == current_user %>
-        <%= link_to 'Edit Car', edit_car_path(@car), class: 'btn btn-warning' %>
-        <%= button_to 'Delete Car', car_path(@car), method: :delete, 
-                     data: { turbo_confirm: 'Are you sure you want to delete this car? This action cannot be undone.' }, 
-                     class: 'btn btn-danger mt-2' %>
+        <%= link_to ' ✏ Edit Car', edit_car_path(@car), class: 'btn btn-warning me-2' %>
+        <%= button_to ' 🗑 Delete Car', car_path(@car), method: :delete,
+                    data: { turbo_confirm: 'Are you sure you want to delete this car? This action cannot be undone.' },
+                    class: 'btn btn-danger' %>
       <% end %>
+    </div>
     </div>
   </div>
 </div>

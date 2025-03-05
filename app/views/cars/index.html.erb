@@ -1,7 +1,7 @@
+<%= render 'shared/background' %>
 
 
-
-<h1 class="text-center my-4">🚗 Cars index</h1>
+<h1 class="text-center my-4">🚗 Available Cars</h1>
 
 <!-- Bouton pour voir les réservations -->
 <div class="text-center mb-4">
@@ -39,26 +39,33 @@
         </div>
       </div>
     <% end %>
-  </div>  
+  </div>
 </div>
 
 <style>
   .cars-container {
-    margin-top: 20px;
+    margin-top: 30px;
   }
 
   .card {
     height: 100%;
-    transition: transform 0.3s;
+    border-radius: 15px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
   }
 
   .card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
   }
 
   .card-img-top {
-    height: 200px;
+    height: 300px;
     object-fit: cover;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
   }
-</style>
+
+  .card-body {
+    padding: 15px;
+  }
+ </style>

@@ -30,20 +30,20 @@ users = User.create!([
 
 # Création de 5 voitures en associant un utilisateur à chaque voiture
 cars = [
-  { desc: "Voiture 1", user_id: User.all.id },
-  { desc: "Voiture 2", user_id: User.all.id },
-  { desc: "Voiture 3", user_id: User.all.id },
+  { description: "Voiture 1", user_id: users.first.id, km: 15000, year: 2000, price: 200, location: "Paris", phase: "new" },
+  { description: "Voiture 2", user_id: users.first.id, km: 15000, year: 2000, price: 200, location: "Lyon", phase: "used" },
+  { description: "Voiture 3", user_id: users.first.id, km: 15000, year: 2000, price: 200, location: "Marseille", phase: "certified" }
+]
   # { desc: "Voiture 4", user_id: user.id },
   # { desc: "Voiture 5", user_id: user.id }
-]
 
 cars.each_with_index do |car_attributes, index|
   puts "Creating car"
   car = Car.new(car_attributes)
   puts "Attaching photo"
   file = File.open(Rails.root.join("app/assets/images/car-#{index + 1}.jpg"))
-  car.img.attach(io: file, filename: "multiple.jpg", content_type: "image/jpg")
-  car.save
+  car.images.attach(io: file, filename: "multiple.jpg", content_type: "image/jpg")
+  car.save!
 end
 
 
