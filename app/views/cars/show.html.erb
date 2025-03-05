@@ -1,78 +1,95 @@
-
-<p><strong>Description :</strong> <%= @car.desc %></p>
-<%= link_to "Retour à la liste des voitures", cars_path, class: "btn btn-secondary mt-2" %>
-<%= link_to "Louer la", new_rental_path(car_id: @car.id), class: "btn btn-primary" %>
-
-<div class="container mt-4">
+<div class="container mt-5">
   <% if notice %>
     <div class="alert alert-success text-center">
       <%= notice %>
     </div>
   <% end %>
 
-  <div class="car-details bg-light p-4 rounded-3 shadow-lg">
-    <h1 class="text-center text-primary fw-bold mb-4"><%= @car.phase %></h1>
+  <div class="card shadow-lg p-4 rounded-3">
+    <!-- Titre -->
+    <h1 class="text-primary fw-bold text-center"><%= @car.phase %></h1>
 
     <!-- Images de la voiture -->
     <div class="car-images mb-4">
       <% if @car.images.attached? %>
-        <div id="carouselExampleControls" class="carousel slide rounded-3 shadow-sm" data-bs-ride="carousel">
+        <div id="carCarousel" class="carousel slide rounded-3 shadow-sm" data-bs-ride="carousel">
           <div class="carousel-inner">
             <% @car.images.each_with_index do |image, index| %>
               <div class="carousel-item <%= 'active' if index == 0 %>">
-                <%= image_tag image, class: 'd-block w-100', style: 'height: 450px; object-fit: cover; border-radius: 12px;' %>
+                <%= cl_image_tag image.key, class: 'd-block w-100', style: 'height: 450px; object-fit: cover; border-radius: 12px;' %>
               </div>
             <% end %>
           </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+          <button class="carousel-control-prev" type="button" data-bs-target="#carCarousel" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
           </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+          <button class="carousel-control-next" type="button" data-bs-target="#carCarousel" data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
           </button>
         </div>
       <% else %>
-        <div class="no-image bg-light text-center py-5 rounded-3 shadow-sm">No Images Available</div>
+        <div class="no-image bg-light text-center py-5 rounded-3 shadow-sm">
+          <i class="fas fa-car fa-3x text-muted"></i>
+          <p class="mt-2">Aucune image disponible</p>
+        </div>
       <% end %>
     </div>
 
     <!-- Détails de la voiture -->
-    <div class="car-info mb-4">
-      <div class="row">
-        <div class="col-md-6">
-          <h3 class="text-primary">Details</h3>
-          <ul class="list-group">
-            <li class="list-group-item"><strong>Year:</strong> <%= @car.year %></li>
-            <li class="list-group-item"><strong>Kilometers:</strong> <%= @car.km %></li>
-            <li class="list-group-item"><strong>Price:</strong> <%= number_to_currency(@car.price, unit: "€") %></li>
-            <li class="list-group-item"><strong>Location:</strong> <%= @car.location %></li>
-          </ul>
-        </div>
-        <div class="col-md-6">
-          <h3 class="text-primary">Description</h3>
-          <div class="card shadow-sm">
-            <div class="card-body">
-              <p class="text-muted"><%= @car.description %></p>
-            </div>
+    <div class="row mt-3">
+      <div class="col-md-6">
+        <h3 class="text-primary">📋 Détails</h3>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><strong>🗓 Année :</strong> <%= @car.year %></li>
+          <li class="list-group-item"><strong>🚗 Kilométrage :</strong> <%= @car.km %> km</li>
+          <li class="list-group-item"><strong>💰 Prix par jour :</strong> <%= number_to_currency(@car.price, unit: "€") %></li>
+          <li class="list-group-item"><strong>📍 Localisation :</strong> <%= @car.location %></li>
+        </ul>
+      </div>
+      <div class="col-md-6">
+        <h3 class="text-primary">📝 Description</h3>
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <p class="text-muted"><%= @car.description.presence || "Aucune description fournie" %></p>
           </div>
         </div>
       </div>
     </div>
 
     <!-- Boutons d'action -->
-    <div class="actions mt-4 d-flex justify-content-start">
-      <%= link_to '⬅ Back to Cars', cars_path, class: 'btn btn-secondary me-2' %>
+    <div class="mt-4 d-flex flex-wrap gap-2">
+      <%= link_to '⬅ Retour', cars_path, class: 'btn btn-secondary' %>
 
-      <!-- Boutons d'édition et de suppression visibles uniquement pour le propriétaire -->
       <% if user_signed_in? && @car.user == current_user %>
-        <%= link_to ' ✏ Edit Car', edit_car_path(@car), class: 'btn btn-warning me-2' %>
-        <%= button_to ' 🗑 Delete Car', car_path(@car), method: :delete,
-                    data: { turbo_confirm: 'Are you sure you want to delete this car? This action cannot be undone.' },
+        <%= link_to '✏ Modifier', edit_car_path(@car), class: 'btn btn-warning' %>
+        <%= button_to '🗑 Supprimer', car_path(@car), method: :delete,
+                    data: { turbo_confirm: 'Êtes-vous sûr de vouloir supprimer cette voiture ?' },
                     class: 'btn btn-danger' %>
+      <% else %>
+        <%= link_to '🚀 Louer maintenant', new_rental_path(car_id: @car.id), class: 'btn btn-primary' %>
       <% end %>
-    </div>
     </div>
   </div>
 </div>
+
+<!-- Styles améliorés -->
+<style>
+  .card {
+    border-radius: 15px;
+  }
+
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+  }
+
+  .no-image {
+    height: 450px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+</style>
