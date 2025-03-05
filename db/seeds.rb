@@ -8,6 +8,7 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 # On suppose qu'il y a déjà un utilisateur dans la base de données
+
 Rental.destroy_all
 Car.destroy_all
 User.destroy_all
@@ -15,22 +16,37 @@ User.destroy_all
 
 user = User.first  # Utiliser le premier utilisateur trouvé, ou créer un nouvel utilisateur si nécessaire
 
+
 users = User.create!([
   { email: "user1@example.com", password: "password1" },
   { email: "user2@example.com", password: "password2" },
   { email: "user3@example.com", password: "password3" },
-  { email: "user4@example.com", password: "password4" },
-  { email: "user5@example.com", password: "password5" }
+  # { email: "user4@example.com", password: "password4" },
+  # { email: "user5@example.com", password: "password5" }
 ])
 
-cars = Car.create!([
-  { desc: "Voiture 1", img: "img1.jpg", user_id: users.first.id, price: 50 },
-  { desc: "Voiture 2", img: "img2.jpg", user_id: users.second.id, price: 70 },
-  { desc: "Voiture 3", img: "img3.jpg", user_id: users.third.id, price: 90 },
-  { desc: "Voiture 4", img: "img4.jpg", user_id: users.fourth.id, price: 120 },
-  { desc: "Voiture 5", img: "img5.jpg", user_id: users.fifth.id, price: 150 }
-])
-puts " 5 voitures ont été créées avec succès !"
+
+
+
+# Création de 5 voitures en associant un utilisateur à chaque voiture
+cars = [
+  { desc: "Voiture 1", user_id: User.all.id },
+  { desc: "Voiture 2", user_id: User.all.id },
+  { desc: "Voiture 3", user_id: User.all.id },
+  # { desc: "Voiture 4", user_id: user.id },
+  # { desc: "Voiture 5", user_id: user.id }
+]
+
+cars.each_with_index do |car_attributes, index|
+  puts "Creating car"
+  car = Car.new(car_attributes)
+  puts "Attaching photo"
+  file = File.open(Rails.root.join("app/assets/images/car-#{index + 1}.jpg"))
+  car.img.attach(io: file, filename: "multiple.jpg", content_type: "image/jpg")
+  car.save
+end
+
+
 
 puts "5 utilisateurs et 5 voitures ont été créés avec succès !"
 
