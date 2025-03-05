@@ -8,10 +8,24 @@
   </div>
 <% end %>
 
-<div style="width: 100%; height: 600px;"
-  data-controller="map"
-  data-map-markers-value="<%= @markers.to_json %>"
-  data-map-api-key-value="<%= ENV['MAPBOX_ACCESS_TOKEN'] %>"></div>
+<div class="map-container">
+  <div 
+    data-controller="map"
+    data-map-markers-value="<%= @markers.to_json %>"
+    data-map-api-key-value="<%= ENV['MAPBOX_ACCESS_TOKEN'] %>"
+    style="width: 100%; height: 600px;"
+  ></div>
+</div>
+
+<!-- Section pour ajouter une voiture - visible pour tous les utilisateurs -->
+      <div class="add-car">
+        <!-- Lien vers le formulaire de création d'une nouvelle voiture -->
+        <% if user_signed_in? %>
+          <%= link_to 'Add a car', new_car_path, class: 'btn btn-primary' %>
+        <% else %>
+          <%= link_to 'Add a car', new_user_session_path, class: 'btn btn-primary' %>
+        <% end %>
+      </div>
 
 <div class="container cars-container">
   <% if @cars.any? %>

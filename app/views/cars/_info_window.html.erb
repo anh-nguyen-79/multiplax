@@ -1,0 +1,8 @@
+<div class="map-info-window">
+  <h2><%= car.phase %></h2>
+  <p><%= car.location %></p>
+  <p><strong><%= number_to_currency(car.price, unit: "€", precision: 0) %></strong></p>
+  <% if car.images.attached? %>
+    <%= cl_image_tag car.images.first.key, height: 100, width: 150, crop: :fill %>
+  <% end %>
+</div> 

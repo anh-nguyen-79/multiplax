@@ -8,20 +8,34 @@ export default class extends Controller {
   }
 
   connect() {
+    console.log("Map controller connected"); // Pour le débogage
     mapboxgl.accessToken = this.apiKeyValue
 
     this.map = new mapboxgl.Map({
       container: this.element,
-      style: "mapbox://styles/mapbox/streets-v10"
+      style: "mapbox://styles/mapbox/streets-v10",
+      center: [2.3522, 48.8566], // Paris par défaut
+      zoom: 13
     })
-    this.addMarkersToMap()
-    this.fitMapToMarkers()
+    
+    if (this.markersValue && this.markersValue.length > 0) {
+      console.log("Markers:", this.markersValue); // Pour le débogage
+      this.addMarkersToMap()
+      this.fitMapToMarkers()
+    } else {
+      console.log("No markers available"); // Pour le débogage
+    }
   }
 
   addMarkersToMap() {
     this.markersValue.forEach((marker) => {
+      // Créer un élément HTML pour le popup
+      const popup = new mapboxgl.Popup().setHTML(marker.info_window_html)
+      
+      // Créer et ajouter le marker avec le popup
       new mapboxgl.Marker()
         .setLngLat([ marker.lng, marker.lat ])
+        .setPopup(popup)
         .addTo(this.map)
     })
   }
