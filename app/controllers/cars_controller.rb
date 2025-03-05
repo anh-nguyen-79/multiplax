@@ -2,10 +2,27 @@ class CarsController < ApplicationController
   # Action pour afficher toutes les voitures
   # GET /cars
   def index
-
     @cars = Car.all
     # @rentals = current_user.rentals if user_signed_in?
-
+    # Vérifier si des voitures ont des coordonnées
+    @markers = []
+    
+    if @cars.any?
+      geocoded_cars = @cars.geocoded
+      
+      if geocoded_cars.any?
+        @markers = geocoded_cars.map do |car|
+          {
+            lat: car.latitude,
+            lng: car.longitude,
+            info_window_html: render_to_string(partial: "info_window", locals: {car: car})
+          }
+        end
+      end
+    end
+    
+    # Ajouter un log pour le débogage
+    Rails.logger.debug "Markers: #{@markers.inspect}"
   end
 
   # Action pour afficher le formulaire de création d'une nouvelle voiture
