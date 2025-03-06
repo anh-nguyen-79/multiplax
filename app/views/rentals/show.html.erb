@@ -42,8 +42,6 @@
   <div class="d-flex justify-content-between">
     <%= link_to "Retour", cars_path, class: "btn btn-secondary w-30" %>
     <%link_to "Edit", edit_rental_path(@rental), class: "btn btn-primary w-30" %>
-
-
       <% if @rental.status == "confirmed" %>
         <button class="btn btn-danger w-30" data-bs-toggle="modal" data-bs-target="#cancelModal">
           ❌ Cancel
