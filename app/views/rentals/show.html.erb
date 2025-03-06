@@ -4,55 +4,65 @@
 <div class="container">
   <h1 class="text-center my-4">Review your booking</h1>
 
-  <!-- Image de la voiture -->
-  <div class="text-center mb-4">
-    <% if @car.images.attached? && @car.images.first.present? %>
-      <%= cl_image_tag @car.images.first.key, class: "img-fluid rounded", style: "width: 100%; max-height: 250px; object-fit: cover;" %>
-    <% else %>
-      <img src="<%= asset_path 'default_car.png' %>" alt="Image par défaut" class="img-fluid rounded shadow-sm" style="width: 100%; max-height: 250px; object-fit: cover;">
-    <% end %>
-  </div>
-
-  <!-- Informations voiture -->
-  <h3 class="text-center"><%= @car.phase %></h3>
-  <p class="text-center text-muted"><%= @car.description %></p>
-
-  <ul class="list-group mb-4">
-    <li class="list-group-item"><strong>Year:</strong> <%= @car.year %></li>
-    <li class="list-group-item"><strong>Kilometer:</strong> <%= @car.km %> km</li>
-    <li class="list-group-item"><strong>Price per day:</strong> <%= number_to_currency(@car.price, unit: "€") %></li>
-    <li class="list-group-item"><strong>Location:</strong> <%= @car.location %></li>
-  </ul>
-
-  <!-- Détails de la réservation -->
-  <hr>
-  <h3 class="text-center text-primary">Rental Period</h3>
-  <p><strong>Pick-up Date:</strong> <%= @rental.start_date.strftime("%d/%m/%Y") %></p>
-  <p><strong>Return Date:</strong> <%= @rental.end_date.strftime("%d/%m/%Y") %></p>
-
-  <hr>
-  <h3 class="text-center text-success">Payment Details</h3>
-  <p><strong>Price per day:</strong> <%= @car.price %> €</p>
-  <p><strong>Number of Days:</strong> <%= (@rental.end_date - @rental.start_date).to_i %> days</p>
-  <h3 class="text-center"><strong>Total:</strong> <%= @rental.price %> €</h3>
-
-  <hr>
-
-  <!-- Boutons d'action -->
-  <div class="d-flex justify-content-between">
-    <%= link_to "Retour", cars_path, class: "btn btn-secondary w-30" %>
-    <%link_to "Edit", edit_rental_path(@rental), class: "btn btn-primary w-30" %>
-
-
-      <% if @rental.status == "confirmed" %>
-        <button class="btn btn-danger w-30" data-bs-toggle="modal" data-bs-target="#cancelModal">
-          ❌ Cancel
-        </button>
+  <div class="row">
+    <!-- Colonne de l'image -->
+    <div class="col-md-6 d-flex align-items-center justify-content-center">
+      <% if @car.images.attached? && @car.images.first.present? %>
+        <%= cl_image_tag @car.images.first.key, class: "img-fluid rounded shadow-sm", style: "width: 100%; max-height: 300px; object-fit: cover;" %>
+      <% else %>
+        <img src="<%= asset_path 'default_car.png' %>" alt="Image par défaut" class="img-fluid rounded shadow-sm" style="width: 100%; max-height: 300px; object-fit: cover;">
       <% end %>
+    </div>
+
+    <!-- Colonne des informations -->
+    <div class="col-md-6">
+      <h3 class="text-center"><%= @car.phase %></h3>
+      <p class="text-center text-muted"><%= @car.description %></p>
+
+      <div class="car-details">
+        <div class="car-detail-item">
+          <i class="fas fa-calendar-alt"></i> <span>Year: <%= @car.year %></span>
+        </div>
+        <div class="car-detail-item">
+          <i class="fas fa-road"></i> <span>Kilometer: <%= @car.km %> km</span>
+        </div>
+        <div class="car-detail-item">
+          <i class="fas fa-euro-sign"></i> <span>Price per day: <%= number_to_currency(@car.price, unit: "€") %></span>
+        </div>
+        <div class="car-detail-item">
+          <i class="fas fa-map-marker-alt"></i> <span>Location: <%= @car.location %></span>
+        </div>
+      </div>
+
+      <h3 class="text-center text-primary">Rental Period</h3>
+      <p><strong>Pick-up Date:</strong> <%= @rental.start_date.strftime("%d/%m/%Y") %></p>
+      <p><strong>Return Date:</strong> <%= @rental.end_date.strftime("%d/%m/%Y") %></p>
+
+      <hr>
+      <h3 class="text-center text-success">Payment Details</h3>
+      <p><strong>Price per day:</strong> <%= @car.price %> €</p>
+      <p><strong>Number of Days:</strong> <%= (@rental.end_date - @rental.start_date).to_i %> days</p>
+      <h3 class="text-center">
+        <span class="total-container">Total: <%= @rental.price %> €</span>
+      </h3>
+
+    </div>
   </div>
+
+  <hr>
+
+<div class="d-flex justify-content-between">
+  <%= link_to "Retour", cars_path, class: "btn-custom btn-return" %>
+  <%= link_to "Edit", edit_rental_path(@rental), class: "btn-custom btn-edit" %>
+
+  <% if @rental.status == "confirmed" %>
+    <button class="btn-custom btn-cancel" data-bs-toggle="modal" data-bs-target="#cancelModal">
+      Cancel
+    </button>
+  <% end %>
 </div>
 
-<!-- Modal de confirmation pour annuler la réservation -->
+<!-- Modal pour annulation -->
 <div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -71,8 +81,7 @@
   </div>
 </div>
 
-
-<!-- Toaster pour afficher la confirmation -->
+<!-- Toaster pour confirmation -->
 <% if flash[:notice] %>
   <div class="alert alert-success position-fixed bottom-0 end-0 p-3" id="toaster" data-controller="toaster" style="z-index: 1000;">
     <%= flash[:notice] %>
