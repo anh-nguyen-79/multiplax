@@ -1,80 +1,64 @@
-<h1 class="text-center my-4">🚗 Détails de la Réservation</h1>
+<%= render "shared/navbar" %>
+<%= render 'shared/background' %>
 
-<div class="container d-flex justify-content-center">
-  <div class="card shadow-lg p-4" style="width: 40rem; border-radius: 10px;">
-    <div class="card-body">
-      <!-- Image de la voiture -->
-      <div class="text-center">
-        <% if @car.images.attached? && @car.images.first.present? %>
-          <%= cl_image_tag @car.images.first.key, class: "img-fluid rounded", style: "width: 100%; max-height: 250px; object-fit: cover;" %>
-        <% else %>
-          <img src="<%= asset_path 'default_car.png' %>" alt="Image par défaut" class="img-fluid rounded" style="width: 100%; max-height: 250px; object-fit: cover;">
-        <% end %>
-      </div>
-    </div>
+<div class="container">
+  <h1 class="text-center my-4">Review your booking</h1>
 
-      <h2 class="text-center mt-3"><%= @car.desc %></h2>
+    <!-- Colonne des informations -->
+    <div class="col-md-6">
+      <h3 class="text-center"><%= @car.phase %></h3>
+      <p class="text-center text-muted"><%= @car.description %></p>
 
-      <!-- Statut de la réservation -->
-      <div class="text-center my-3">
-        <% if @rental.status == "confirmed" %>
-          <span class="badge bg-success p-2">✅ Confirmée</span>
-        <% elsif @rental.status == "cancelled" %>
-          <span class="badge bg-danger p-2">❌ Annulée</span>
-        <% else %>
-          <span class="badge bg-secondary p-2">❔ Inconnue</span>
-        <% end %>
+      <div class="car-details">
+        <div class="car-detail-item">
+          <i class="fas fa-calendar-alt"></i> <span>Year: <%= @car.year %></span>
+        </div>
+        <div class="car-detail-item">
+          <i class="fas fa-road"></i> <span>Kilometer: <%= @car.km %> km</span>
+        </div>
+        <div class="car-detail-item">
+          <i class="fas fa-euro-sign"></i> <span>Price per day: <%= number_to_currency(@car.price, unit: "€") %></span>
+        </div>
+        <div class="car-detail-item">
+          <i class="fas fa-map-marker-alt"></i> <span>Location: <%= @car.location %></span>
+        </div>
       </div>
 
-      <!-- Détails de la réservation -->
-      <hr>
-      <h3 class="text-center text-primary">📅 Période de location</h3>
-      <p><strong>📅 Date de récupération :</strong> <%= @rental.start_date.strftime("%d/%m/%Y") %></p>
-      <p><strong>📅 Date de restitution :</strong> <%= @rental.end_date.strftime("%d/%m/%Y") %></p>
+      <h3 class="text-center text-primary">Rental Period</h3>
+      <p><strong>Pick-up Date:</strong> <%= @rental.start_date.strftime("%d/%m/%Y") %></p>
+      <p><strong>Return Date:</strong> <%= @rental.end_date.strftime("%d/%m/%Y") %></p>
 
       <hr>
-      <h3 class="text-center text-success">💰 Détails du paiement</h3>
-      <p><strong>💸 Prix par jour :</strong> <%= @car.price %> €</p>
-      <p><strong>📆 Nombre de jours loué :</strong> <%= (@rental.end_date - @rental.start_date).to_i %> jours</p>
-      <h3 class="text-center"><strong> 💰 Total :</strong> <%= @rental.price %> €</h3>
-
-      <hr>
-      <!-- Boutons d'action -->
-      <div class="d-flex justify-content-between">
-        <%= link_to "⬅ Retour", cars_path, class: "btn btn-secondary w-30" %>
-        <%= link_to "✏ Modifier", edit_rental_path(@rental), class: "btn btn-primary w-30" %>
-
-        <% if @rental.status == "confirmed" %>
-          <button class="btn btn-danger w-30" data-bs-toggle="modal" data-bs-target="#cancelModal">
-            ❌ Annuler
-          </button>
-        <% end %>
-      </div>
+      <h3 class="text-center text-success">Payment Details</h3>
+      <p><strong>Price per day:</strong> <%= @car.price %> €</p>
+      <p><strong>Number of Days:</strong> <%= (@rental.end_date - @rental.start_date).to_i %> days</p>
+      <h3 class="text-center">
+        <span class="total-container">Total: <%= @rental.price %> €</span>
+      </h3>
 
     </div>
   </div>
 </div>
 
-<!-- Modal de confirmation pour annuler la réservation -->
+<!-- Modal pour annulation -->
 <div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="cancelModalLabel">Confirmation d'annulation</h5>
+        <h5 class="modal-title" id="cancelModalLabel">Cancellation Confirmation</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        Êtes-vous sûr de vouloir annuler cette réservation ?
+        Are you sure you want to cancel this booking?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Non</button>
-        <%= link_to "Oui, annuler", cancel_rental_path(@rental), method: :patch, class: "btn btn-danger" %>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+        <%= link_to "Yes, cancel", cancel_rental_path(@rental), method: :patch, class: "btn btn-danger" %>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Toaster pour afficher la confirmation -->
 <% if flash[:notice] %>
   <div class="alert alert-success position-fixed bottom-0 end-0 p-3" id="toaster" data-controller="toaster">
     <%= flash[:notice] %>

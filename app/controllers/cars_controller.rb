@@ -36,26 +36,26 @@ class CarsController < ApplicationController
   # GET /cars/:id
   def show
     @car = Car.find(params[:id])  # Trouve la voiture par son ID
+    @rental = Rental.new
   end
 
   # Action pour créer une nouvelle voiture
   # POST /cars
-  def create
-    @car = Car.new(car_params)
+   def create
+  @car = Car.new(car_params)
+  @car.user = current_user if user_signed_in?
 
-    # Associer l'utilisateur actuel à la voiture si l'utilisateur est connecté
-    @car.user = current_user if user_signed_in?
-
+  respond_to do |format|
     if @car.save
-      # redirect_to cars_path, notice: 'Car was successfully created.'
-      # redirect_to rentals_path, notice: 'Car was successfully created.'
-      redirect_to rentals_path(tab: "loueur")
+      format.html { redirect_to rentals_path(tab: "loueur"), notice: "🚗 Car added successfully!" }
+      format.json { render json: @car, status: :created }
     else
-      # Ajouter un message flash d'erreur
-      flash.now[:alert] = "There were errors in your submission. Please check the form."
-      render :new, status: :unprocessable_entity
+      flash.now[:alert] = "🚨 There were errors in your submission. Please check the form."
+      format.html { render :new, status: :unprocessable_entity }
+      format.json { render json: @car.errors, status: :unprocessable_entity }
     end
   end
+end
 
   # Action pour afficher le formulaire d'édition d'une voiture
   # GET /cars/:id/edit

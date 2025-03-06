@@ -8,6 +8,7 @@
 @import "font-awesome";
 @import url("https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.css");
 @import url("https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css");
+@import url('https://cdn-uicons.flaticon.com/2.6.0/uicons-thin-straight/css/uicons-thin-straight.css');
 
 // Your CSS partials
 @import "components/index";
@@ -51,29 +52,150 @@
   align-items: center;
   margin: 20px;
 }
-
-
 .btn-custom {
-  background: linear-gradient(135deg, #d079d0, #5b9494, #000000);
-  color: white;
-  border-radius: 8px;
-  font-size: 1.4rem;
-  padding: 15px 30px;
-  border: 2px solid #fff;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.4);
-  transition: all 0.3s ease-in-out;
-}
-
-.btn-custom:hover {
-  background: linear-gradient(135deg, #5fa3a3, #6c3c6c, #000000);
-  transform: scale(1.1);
-  box-shadow: 0 4px 25px rgba(255, 255, 255, 0.7);
+  font-size: 18px;
+  font-weight: bold;
+  padding: 12px 24px;
+  border: none;
+  background: none;
+  text-transform: uppercase;
+  letter-spacing: 1px;
   cursor: pointer;
-  text-shadow: 2px 2px 8px rgba(255, 255, 255, 0.9);
+  text-align: center;
+  transition: 0.3s ease-in-out;
+  display: inline-block;
+  width: 30%;
+  min-width: 120px;
+  text-decoration: none;
 }
 
-.btn-custom:focus {
-  outline: none;
-  box-shadow: 0 0 20px rgba(0, 255, 255, 1);
+/* Bouton Retour (Texte blanc) */
+.btn-return {
+  color: white;
 }
+
+.btn-return:hover {
+  transform: scale(1.05);
+  text-decoration: underline;
+}
+
+/* Bouton Edit (Texte blanc) */
+.btn-edit {
+  color: white;
+}
+
+.btn-edit:hover {
+  transform: scale(1.05);
+  text-decoration: underline;
+}
+
+/* Bouton Cancel (Texte rouge) */
+.btn-cancel {
+  color: red;
+}
+/* Image de la voiture avec angles arrondis et une ombre douce */
+.car-image {
+  border-radius: 15px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-height: 250px;
+  object-fit: cover;
+}
+
+/* Bulle design derrière le total */
+.total-container {
+  position: relative;
+  display: inline-block;
+  padding: 15px 25px;
+  background: linear-gradient(135deg, #ffcc00, #ff6600);
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+  border-radius: 50px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+/* Effet bulle avec pseudo-élément */
+.total-container::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -15px;
+  width: 30px;
+  height: 30px;
+  background: inherit;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  box-shadow: inset 5px 5px 10px rgba(255, 255, 255, 0.2);
+}
+body {
+  background-image: url('background.jpg'); /* Chemin de ton image */
+  background-size: cover;  /* Ajuste l’image sans déformation */
+  background-position: center; /* Centre l’image */
+  background-repeat: no-repeat; /* Évite la répétition */
+  background-attachment: fixed; /* Effet de parallaxe (optionnel) */
+}
+.card {
+  backdrop-filter: blur(5px);
+  border-radius: 12px;
+}
+
+.list-group-item {
+  background-color: transparent;
+}
+
+.title {
+  color: #5b9494;
+  font-size: 24px;
+}
+
+  .carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+  }
+
+  .no-image {
+    height: 450px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .card-shadow {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+  }
+
+  .car-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centre le texte */
+    text-align: center; /* Centre le texte dans chaque élément */
+    gap: 10px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+  }
+
+  .car-detail-item {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centre horizontalement */
+    gap: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    padding: 10px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Prend toute la largeur du conteneur */
+  }
+
+  .car-detail-item i {
+    font-size: 22px;
+    color: #007bff;
+  }

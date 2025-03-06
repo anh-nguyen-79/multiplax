@@ -1,30 +1,22 @@
-<div class="container mt-5">
+<%= render "shared/navbar" %>
+<%= render 'shared/background' %>
+
+<div class="container mt-5 ">
   <div class="row justify-content-center">
     <div class="col-md-8">
-      <div class="card shadow-lg p-4 rounded">
+      <div class="card shadow-lg p-4 rounded-4">
         <div class="card-body">
 
           <!-- Titre -->
-          <h1 class="text-center text-primary fw-bold">🚗 Reservation</h1>
-          <h4 class="text-center text-muted mb-4">Car details</h4>
+          <h1 class="text-center text-primary fw-bold mb-4">Reservation</h1>
 
           <!-- Message d'erreur -->
           <% if flash[:alert] %>
-            <div class="alert alert-danger text-center">
+            <div class="alert alert-danger text-center fw-bold">
               <%= flash[:alert] %>
             </div>
           <% end %>
 
-          <!-- Image de la voiture -->
-          <div class="text-center mb-4">
-            <% if @car.images.attached? && @car.images.first.present? %>
-              <%= cl_image_tag @car.images.first.key, class: "img-fluid rounded", style: "width: 100%; max-height: 250px; object-fit: cover;" %>
-            <% else %>
-              <img src="<%= asset_path 'default_car.png' %>" alt="Image par défaut" class="img-fluid rounded shadow-sm" style="width: 100%; max-height: 250px; object-fit: cover;">
-            <% end %>
-          </div>
-
-          <!-- Informations voiture -->
 
           <!-- Formulaire de réservation -->
           <%= form_with model: @rental, url: rentals_path, method: :post,
@@ -32,29 +24,29 @@
 
             <%= f.hidden_field :car_id, value: @car.id %>
 
-            <div class="mb-3">
-              <%= f.label :start_date, "📅 Date de début", class: "form-label fw-bold" %>
-              <%= f.date_field :start_date, required: true, class: "form-control",
+            <div class="mb-4">
+              <%= f.label :start_date, "Pick-up Date", class: "form-label fw-bold text-secondary" %>
+              <%= f.date_field :start_date, required: true, class: "form-control p-3 rounded text-secondary",
                   data: { action: "input->rental-price#calculate", rental_price_target: "startDate" } %>
             </div>
 
-            <div class="mb-3">
-              <%= f.label :end_date, "📅 Date de fin", class: "form-label fw-bold" %>
-              <%= f.date_field :end_date, required: true, class: "form-control",
+            <div class="mb-4">
+              <%= f.label :end_date, "Return Date", class: "form-label fw-bold text-secondary" %>
+              <%= f.date_field :end_date, required: true, class: "form-control p-3 rounded text-secondary",
                   data: { action: "input->rental-price#calculate", rental_price_target: "endDate" } %>
             </div>
 
             <!-- Détails du prix -->
-            <div class="bg-light p-3 rounded shadow-sm">
-              <p><strong>💰 Price per day :</strong> <span data-rental-price-target="price"><%= @car.price %></span> €</p>
-              <p><strong>📆 Number of days :</strong> <span data-rental-price-target="days">0</span> jours</p>
-              <p class="fw-bold fs-5"><strong>💸 Total :</strong> <span data-rental-price-target="totalPrice">Calculation in progress...</span> €</p>
+            <div class="bg-light p-4 rounded shadow-sm border">
+              <p class="mb-2 text-secondary"><strong> Price per day:</strong> <span data-rental-price-target="price"><%= @car.price %></span> €</p>
+              <p class="mb-2 text-secondary"><strong> Number of days :</strong> <span data-rental-price-target="days">0</span> jours</p>
+              <p class="fw-bold text-secondary"><strong> Total :</strong> <span data-rental-price-target="totalPrice">Calculation in progress...</span> €</p>
             </div>
 
             <!-- Boutons d'action -->
             <div class="text-center mt-4">
-              <%= link_to "↩ Retour", cars_path, class: "btn btn-secondary btn-lg ms-2" %>
-              <%= f.submit "Reserve ✅", class: "btn btn-success btn-lg" %>
+              <%= link_to "Retour", cars_path, class: "btn btn-outline-secondary btn-lg px-4 me-3" %>
+              <%= f.submit "Reservation", class: "btn btn-success btn-lg px-5 shadow-sm" %>
             </div>
           <% end %>
 
