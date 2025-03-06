@@ -41,20 +41,21 @@ class CarsController < ApplicationController
 
   # Action pour créer une nouvelle voiture
   # POST /cars
-  def create
-    @car = Car.new(car_params)
-    @car.user = current_user
+   def create
+  @car = Car.new(car_params)
+  @car.user = current_user if user_signed_in?
 
-    respond_to do |format|
-      if @car.save
-        format.html { redirect_to car_url(@car), notice: "Car was successfully created." }
-        format.json { render json: @car, status: :created }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @car.errors, status: :unprocessable_entity }
-      end
+  respond_to do |format|
+    if @car.save
+      format.html { redirect_to rentals_path(tab: "loueur"), notice: "🚗 Car added successfully!" }
+      format.json { render json: @car, status: :created }
+    else
+      flash.now[:alert] = "🚨 There were errors in your submission. Please check the form."
+      format.html { render :new, status: :unprocessable_entity }
+      format.json { render json: @car.errors, status: :unprocessable_entity }
     end
   end
+end
 
   # Action pour afficher le formulaire d'édition d'une voiture
   # GET /cars/:id/edit
@@ -65,7 +66,7 @@ class CarsController < ApplicationController
     # Vérification de sécurité: seul le propriétaire peut éditer sa voiture
     # Si l'utilisateur n'est pas le propriétaire, redirection avec message d'erreur
     unless @car.user == current_user
-      redirect_to cars_path, alert: "You are not authorized to edit this car."
+      redirect_to rentals_path(tab: "loueur"), alert: "You are not authorized to edit this car."
     end
   end
 
@@ -79,13 +80,13 @@ class CarsController < ApplicationController
     # Si l'utilisateur n'est pas le propriétaire, redirection avec message d'erreur
     # Le 'return' arrête l'exécution de la méthode immédiatement
     unless @car.user == current_user
-      return redirect_to cars_path, alert: "You are not authorized to edit this car."
+      return redirect_to rentals_path(tab: "loueur"), alert: "You are not authorized to edit this car."
     end
 
     # Tentative de mise à jour avec les paramètres filtrés
     if @car.update(car_params)
       # Redirection vers la page de détails de la voiture avec message de succès
-      redirect_to car_path(@car), notice: 'Car was successfully updated.'
+      redirect_to rentals_path(tab: "loueur"), notice: 'Car was successfully updated.'
     else
       # En cas d'échec, affichage du formulaire avec les erreurs
       flash.now[:alert] = "There were errors in your submission. Please check the form."
