@@ -14,25 +14,31 @@ Car.destroy_all
 User.destroy_all
 
 
-user = User.first  # Utiliser le premier utilisateur trouvé, ou créer un nouvel utilisateur si nécessaire
 
-
-users = User.create!([
-  { email: "user1@example.com", password: "password1" },
-  { email: "user2@example.com", password: "password2" },
-  { email: "user3@example.com", password: "password3" },
-  # { email: "user4@example.com", password: "password4" },
-  # { email: "user5@example.com", password: "password5" }
-])
-
-
+Ben = User.create!(email: "ben@gmail.com", password: "password1")
+Anh = User.create!(email: "anh@gmail.com", password: "password2")
+Antoine = User.create!(email: "antoine@gmail.com", password: "password3")
+Yannick = User.create!(email: "yannick@gmail.com", password: "password4")
 
 
 # Création de 5 voitures en associant un utilisateur à chaque voiture
 cars = [
-  { description: "Voiture 1", user_id: users.first.id, km: 15000, year: 2000, price: 200, location: "Paris", phase: "new" },
-  { description: "Voiture 2", user_id: users.first.id, km: 15000, year: 2000, price: 200, location: "Lyon", phase: "used" },
-  { description: "Voiture 3", user_id: users.first.id, km: 15000, year: 2000, price: 200, location: "Marseille", phase: "certified" }
+  { description: "Voiture 1", user_id: Ben.id, km: 15000, year: 2000, price: 200, location: "16 rue de la paix, Paris", phase: "new" },
+  { description: "Voiture 2", user_id: Anh.id, km: 15000, year: 2000, price: 200, location: "Lyon", phase: "used" },
+  { description: "Voiture 3", user_id: Antoine.id, km: 15000, year: 2000, price: 200, location: "Marseille", phase: "certified" },
+  { description: "Voiture 4", user_id: Yannick.id, km: 15000, year: 2000, price: 200, location: "Paris", phase: "certified" },
+  { description: "Voiture 5", user_id: Ben.id, km: 15000, year: 2000, price: 200, location: "Marseille", phase: "certified" },
+  { description: "Voiture 6", user_id: Anh.id, km: 15000, year: 2000, price: 200, location: "Paris", phase: "certified" },
+  { description: "Voiture 7", user_id: Antoine.id, km: 15000, year: 2000, price: 200, location: "Paris", phase: "certified" },
+  { description: "Voiture 8", user_id: Yannick.id, km: 15000, year: 2000, price: 200, location: "Paris", phase: "certified" },
+  { description: "Voiture 9", user_id: Ben.id, km: 15000, year: 2000, price: 200, location: "Paris", phase: "certified" },
+  { description: "Voiture 10", user_id: Anh.id, km: 15000, year: 2000, price: 200, location: "Paris", phase: "certified" },
+  { description: "Voiture 11", user_id: Ben.id, km: 15000, year: 2000, price: 200, location: "Paris", phase: "certified" },
+  { description: "Voiture 12", user_id: Anh.id, km: 15000, year: 2000, price: 200, location: "Marseille", phase: "certified" },
+  { description: "Voiture 13", user_id: Antoine.id, km: 15000, year: 2000, price: 200, location: "Paris", phase: "certified" },
+  { description: "Voiture 14", user_id: Antoine.id, km: 15000, year: 2000, price: 200, location: "Marseille", phase: "certified" },
+  { description: "Voiture 15", user_id: Ben.id, km: 15000, year: 2000, price: 200, location: "Paris", phase: "certified" },
+  { description: "Voiture 16", user_id: Anh.id, km: 15000, year: 2000, price: 200, location: "Paris", phase: "certified" },
 ]
   # { desc: "Voiture 4", user_id: user.id },
   # { desc: "Voiture 5", user_id: user.id }
@@ -48,7 +54,7 @@ end
 
 
 
-puts "5 utilisateurs et 5 voitures ont été créés avec succès !"
+puts "4 utilisateurs et 16 voitures ont été créés avec succès !"
 
 # rentals = Rental.create!([
 #   { user_id: users.first.id, car_id: cars.first.id, start_date: "2025-03-01", end_date: "2025-03-05", status: "confirmed", price: 100 },

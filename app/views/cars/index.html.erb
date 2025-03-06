@@ -1,7 +1,7 @@
 <%= render "shared/navbar" %>
 <%= render 'shared/background' %>
 
-<h1 class="text-center fw-bold my-4"> Available Cars</h1>
+<h2 class="text-center my-4" style="font-size: 40px; font-weight: bold;">🚗 Find the perfect car near you</h2>
 
 <% if notice %>
   <div class="alert alert-success text-center">
@@ -9,78 +9,125 @@
   </div>
 <% end %>
 
-<div class="map-container">
-  <div
-    data-controller="map"
-    data-map-markers-value="<%= @markers.to_json %>"
-    data-map-api-key-value="<%= ENV['MAPBOX_ACCESS_TOKEN'] %>"
-    style="width: 100%; height: 600px;"
-  ></div>
-</div>
+<div class="home-container">
+  <%= render 'shared/background' %>
+  
+  <div class="search-section">
+    <div class="location-search-bar">
+      <%= form_tag cars_path, method: :get, class: "d-flex" do %>
+        <%= text_field_tag :query,
+          params[:query],
+          class: "form-control",
+          placeholder: "Location (default: Paris)"
+        %>
+        <%= date_field_tag :start_date,
+          params[:start_date],
+          class: "form-control",
+          placeholder: "Start Date"
+        %>
+        <%= date_field_tag :end_date,
+          params[:end_date],
+          class: "form-control",
+          placeholder: "End Date"
+        %>
+      <% end %>
+    </div>
+  </div>
 
-
-
-<div class="container cars-container">
-  <% if @cars.any? %>
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-      <% @cars.each do |car| %>
-        <div class="col">
-          <div class="card shadow-lg border-0">
-            <% if car.images.attached? %>
-              <%= cl_image_tag car.images.first.key, class: 'card-img-top', alt: car.desc, loading: "lazy" %>
-            <% else %>
-              <div class="card-img-top d-flex align-items-center justify-content-center bg-secondary text-white" style="height: 200px;">
-                <i class="fas fa-car fa-3x"></i>
-              </div>
-            <% end %>
-
-            <div class="card-body text-center">
-              <h5 class="card-title fw-bold"><%= car.phase %></h5>
-              <p class="card-text">
-                <strong>🗓 Year:</strong> <%= car.year %><br>
-                <strong>🚗 Km:</strong> <%= car.km %><br>
-                <strong>💰 Price:</strong> <%= number_to_currency(car.price, unit: "€") %><br>
-                <strong>📍 Location:</strong> <%= car.location %>
-              </p>
-
-              <div class="card-actions d-flex justify-content-center gap-2">
-                <%= link_to '🔍 View', car_path(car), class: 'btn btn-info' %>
-
-                <% if user_signed_in? && car.user == current_user %>
-                  <%= link_to '✏ Edit', edit_car_path(car), class: 'btn btn-warning' %>
-                  <%= button_to '🗑 Delete', car_path(car), method: :delete,
-                               data: { turbo_confirm: 'Are you sure you want to delete this car?' },
-                               class: 'btn btn-danger' %>
-                <% end %>
-              </div>
-            </div>
-          </div>
+  <div class="filters-section">
+    <div class="filters-container" data-controller="filters">
+      <div class="filter-buttons">
+        <button data-action="click->filters#togglePrice" class="filter-button">
+          <i class="fi fi-ts-money-bill-wave"></i> Price <i class="fi fi-sr-angle-small-down"></i>
+        </button>
+        <button data-action="click->filters#toggleKm" class="filter-button">
+          <i class="fi fi-ts-road"></i> Kilometers <i class="fi fi-sr-angle-small-down"></i>
+        </button>
+        <button data-action="click->filters#togglePhase" class="filter-button">
+          <i class="fi fi-ts-car"></i> Phase <i class="fi fi-sr-angle-small-down"></i>
+        </button>
+        <button data-action="click->filters#toggleYear" class="filter-button">
+          <i class="fi fi-ts-calendar"></i> Year <i class="fi fi-br-angle-small-down"></i>
+        </button>
+      </div>
+      
+      <%= form_tag cars_path, method: :get, class: "filters-form" do %>
+        <div data-filters-target="priceFilter" class="filter-panel d-none">
+          <h4>Price</h4>
+          <%= range_field_tag :price_min, params[:price_min], min: 0, max: 500, class: "range-slider" %>
+          <span class="price-value"><%= params[:price_min] || 0 %>€ - 500€</span>
         </div>
-      <% end %>  <!-- Fin de la boucle each -->
+        
+        <div data-filters-target="kmFilter" class="filter-panel d-none">
+          <h4>Kilometers</h4>
+          <%= range_field_tag :km_min, params[:km_min], min: 0, max: 100000, class: "range-slider" %>
+          <span class="km-value"><%= params[:km_min] || 0 %> km - 100,000 km</span>
+        </div>
+        
+        <div data-filters-target="phaseFilter" class="filter-panel d-none">
+          <h4>Phase</h4>
+          <%= select_tag :phase, options_for_select(['New', 'Used'], params[:phase]), include_blank: true, class: "form-control" %>
+        </div>
+        
+        <div data-filters-target="yearFilter" class="filter-panel d-none">
+          <h4>Year</h4>
+          <%= select_tag :year, options_for_select((2000..Date.today.year).to_a.reverse, params[:year]), include_blank: true, class: "form-control" %>
+        </div>
+      <% end %>
     </div>
-  <% else %>
-    <div class="alert alert-info text-center">
-      No cars available at the moment. Be the first to add one! 🚀
-    </div>
-  <% end %>
-</div>
+  </div>
 
-
-<!-- Section pour ajouter une voiture - visible pour tous les utilisateurs -->
-      <div class="add-car">
-        <!-- Lien vers le formulaire de création d'une nouvelle voiture -->
-        <% if user_signed_in? %>
-            <div data-controller="toggle" class="mt-5">
-              <button data-action="click->toggle#fire" class="btn btn-custom">Add a new car</button>
-              <div data-toggle-target="togglableElement" class="d-none">
-                <%= render "form", car: @car %>
+  <div class="split-layout-container">
+    <div class="cars-content">
+      <div class="cars-grid">
+        <% @cars.each do |car| %>
+          <div class="car-card">
+            <div class="car-image" style="background-image: url('<%= cl_image_path car.images.first.key if car.images.attached? %>')">
+              <div class="car-price">
+                <span><%= car.price %>€</span>
+                <small>/day</small>
               </div>
             </div>
-          <%# <%= link_to 'Add a car', new_car_path, class: 'btn btn-primary' %>
-        <% else %>
-            <%= link_to 'Add a car', new_user_session_path, class: "btn btn-custom" %>
+            
+            <div class="car-info">
+              <h3><%= car.phase %></h3>
+              <div class="car-details">
+                <span><i class="fas fa-map-marker-alt"></i> <%= car.location %></span>
+              </div>
+            </div>
+            
+            <%= link_to "", car_path(car), class: "card-link" %>
+          </div>
         <% end %>
       </div>
+    </div>
+
+    <div class="map-container">
+      <div
+        data-controller="map"
+        data-map-markers-value="<%= @markers.to_json %>"
+        data-map-api-key-value="<%= ENV['MAPBOX_ACCESS_TOKEN'] %>"
+        class="sticky-map"
+      ></div>
+    </div>
+  </div>
+</div>
+
+<!-- Section pour ajouter une voiture - visible pour tous les utilisateurs -->
+<div class="add-car">
+  <!-- Lien vers le formulaire de création d'une nouvelle voiture -->
+  <% if user_signed_in? %>
+      <div data-controller="toggle" class="mt-5">
+        <button data-action="click->toggle#fire" class="btn btn-custom">Add a new car</button>
+        <div data-toggle-target="togglableElement" class="d-none">
+          <%= render "form", car: @car %>
+        </div>
+      </div>
+    <%# <%= link_to 'Add a car', new_car_path, class: 'btn btn-primary' %>
+  <% else %>
+      <%= link_to 'Add a car', new_user_session_path, class: "btn btn-custom" %>
+  <% end %>
+</div>
 
 <!-- Bouton pour voir les réservations -->
 <%# <div class="text-center my-4">
