@@ -17,6 +17,7 @@
             </div>
           <% end %>
 
+
           <!-- Formulaire de réservation -->
           <%= form_with model: @rental, url: rentals_path, method: :post,
               data: { controller: "rental-price", rental_price_price_per_day_value: @car.price.to_i }, class: "mt-3" do |f| %>

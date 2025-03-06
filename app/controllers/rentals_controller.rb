@@ -3,7 +3,10 @@ class RentalsController < ApplicationController
   before_action :set_rental, only: [:show, :edit, :update, :destroy, :cancel]
 
   def index
-    @rentals = current_user.rentals.order(start_date: :desc)
+    @upcoming_rentals = current_user.rentals.where("start_date >= ?", Date.today).order(:start_date)
+    @past_rentals = current_user.rentals.where("end_date < ?", Date.today).order(end_date: :desc)
+    @user_cars = current_user.cars
+    @all_rentals = Rental.where(car_id: @user_cars.pluck(:id)).order(created_at: :desc) if @user_cars.present?
   end
 
   def show
@@ -28,8 +31,8 @@ class RentalsController < ApplicationController
     @rental.price = @car.price * (@rental.end_date - @rental.start_date).to_i
 
     if @rental.save
-      flash[:notice] = "🚗 Réservation confirmée avec succès !"
-      redirect_to rental_path(@rental)
+      flash[:notice] = "✅ Booked!"
+      redirect_to rentals_path(anchor: "loueur")
     else
       flash[:alert] = @rental.errors.full_messages.join(", ")
       render :new, status: :unprocessable_entity
@@ -44,27 +47,27 @@ class RentalsController < ApplicationController
   def update
     if @rental.update(rental_params)
       @rental.update(price: @rental.car.price * (@rental.end_date - @rental.start_date).to_i)  # Recalcule le prix
-      flash[:notice] = "✅ mise à jour avec succès !"
+      flash[:notice] = "✅ Updated !"
       redirect_to rental_path(@rental)  # ✅ Reste sur la page de réservation
     else
-      flash[:alert] = "❌ Erreur lors de la mise à jour, veuillez réessayer."
+      flash[:alert] = "❌ Oops sommthong went wrong."
       render :edit, status: :unprocessable_entity
     end
   end
   def destroy
     @rental.destroy
-    flash[:notice] = "🚨 Réservation supprimée définitivement !"
+    flash[:notice] = "🚨 Deletted !"
     redirect_to rentals_path
   end
 
   def cancel
     if @rental.status == "confirmed"
-      @rental.update(status: "cancelled")
-      flash[:notice] = "🚨 Réservation annulée avec succès !"
+      @rental.update(status: "canceled")
+      flash[:notice] = "🚗 Done!"
     else
-      flash[:alert] = "❌ Cette réservation est déjà annulée."
+      flash[:alert] = "⚠️ This booking is already canceled."
     end
-    redirect_to rental_path(@rental)
+    redirect_to rentals_path
   end
 
   private
