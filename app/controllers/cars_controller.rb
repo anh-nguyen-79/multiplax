@@ -36,6 +36,7 @@ class CarsController < ApplicationController
   # GET /cars/:id
   def show
     @car = Car.find(params[:id])  # Trouve la voiture par son ID
+    @rental = Rental.new
   end
 
   # Action pour créer une nouvelle voiture
