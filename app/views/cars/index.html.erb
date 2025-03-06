@@ -70,9 +70,15 @@
       <div class="add-car">
         <!-- Lien vers le formulaire de création d'une nouvelle voiture -->
         <% if user_signed_in? %>
-          <%= link_to 'Add a car', new_car_path, class: 'btn btn-primary' %>
+            <div data-controller="toggle" class="mt-5">
+              <button data-action="click->toggle#fire" class="btn btn-custom">Add a new car</button>
+              <div data-toggle-target="togglableElement" class="d-none">
+                <%= render "form", car: @car %>
+              </div>
+            </div>
+          <%# <%= link_to 'Add a car', new_car_path, class: 'btn btn-primary' %>
         <% else %>
-          <%= link_to 'Add a car', new_user_session_path, class: 'btn btn-primary' %>
+            <%= link_to 'Add a car', new_user_session_path, class: "btn btn-custom" %>
         <% end %>
       </div>
 

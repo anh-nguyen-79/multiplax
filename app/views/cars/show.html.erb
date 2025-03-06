@@ -1,3 +1,7 @@
+<%= render "shared/navbar" %>
+<%= render 'shared/background' %>
+
+
 <div class="container mt-5">
   <% if notice %>
     <div class="alert alert-success text-center">
@@ -40,12 +44,12 @@
     <!-- Détails de la voiture -->
     <div class="row mt-3">
       <div class="col-md-6">
-        <h3 class="text-primary">📋 Détails</h3>
+        <h3 class="text-primary">📋 Details</h3>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item"><strong>🗓 Année :</strong> <%= @car.year %></li>
+          <li class="list-group-item"><strong>🗓 Year :</strong> <%= @car.year %></li>
           <li class="list-group-item"><strong>🚗 Kilométrage :</strong> <%= @car.km %> km</li>
-          <li class="list-group-item"><strong>💰 Prix par jour :</strong> <%= number_to_currency(@car.price, unit: "€") %></li>
-          <li class="list-group-item"><strong>📍 Localisation :</strong> <%= @car.location %></li>
+          <li class="list-group-item"><strong>💰 Price per day :</strong> <%= number_to_currency(@car.price, unit: "€") %></li>
+          <li class="list-group-item"><strong>📍 Location :</strong> <%= @car.location %></li>
         </ul>
       </div>
       <div class="col-md-6">
@@ -63,12 +67,12 @@
       <%= link_to '⬅ Retour', cars_path, class: 'btn btn-secondary' %>
 
       <% if user_signed_in? && @car.user == current_user %>
-        <%= link_to '✏ Modifier', edit_car_path(@car), class: 'btn btn-warning' %>
-        <%= button_to '🗑 Supprimer', car_path(@car), method: :delete,
-                    data: { turbo_confirm: 'Êtes-vous sûr de vouloir supprimer cette voiture ?' },
+        <%= link_to '✏ Edit', edit_car_path(@car), class: 'btn btn-warning' %>
+        <%= button_to '🗑 Delete', car_path(@car), method: :delete,
+                    data: { turbo_confirm: 'Are you sure you want to delete this car?' },
                     class: 'btn btn-danger' %>
       <% else %>
-        <%= link_to '🚀 Louer maintenant', new_rental_path(car_id: @car.id), class: 'btn btn-primary' %>
+        <%= link_to '🚀 Rent now', new_rental_path(car_id: @car.id), class: 'btn btn-primary' %>
       <% end %>
     </div>
   </div>
