@@ -40,7 +40,10 @@
   <!-- Boutons d'action -->
   <div class="d-flex justify-content-between">
     <%= link_to "Retour", cars_path, class: "btn btn-secondary w-30" %>
-    <%= link_to "Edit", edit_rental_path(@rental), class: "btn btn-primary w-30" %>
+    <%# <%= link_to "Edit", edit_rental_path(@rental), class: "btn btn-primary w-30" %>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal">
+  Edit
+</button>
       <% if @rental.status == "confirmed" %>
         <button class="btn btn-danger w-30" data-bs-toggle="modal" data-bs-target="#cancelModal">
           ❌ Cancel
@@ -67,6 +70,47 @@
     </div>
   </div>
 </div>
+
+
+<!-- Modal de modificacition de la réservation -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Edit the booking</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center">
+          <% if @car.images.attached? && @car.images.first.present? %>
+            <%= cl_image_tag @car.images.first.key, class: "img-fluid rounded", style: "max-height: 250px; object-fit: cover;" %>
+          <% else %>
+            <img src="<%= asset_path 'default_car.png' %>" alt="Default Image" class="img-fluid rounded" style="width: 100%; max-height: 250px; object-fit: cover;">
+          <% end %>
+        </div>
+
+        <!-- Formulaire de modification -->
+        <%= form_with model: @rental, url: rental_path(@rental), method: :patch, data: { turbo: false } do |f| %>
+          <div class="mb-3">
+            <%= f.label :start_date, "Pick-up Date" %>
+            <%= f.date_field :start_date, class: "form-control", required: true %>
+          </div>
+
+          <div class="mb-3">
+            <%= f.label :end_date, "Return Date" %>
+            <%= f.date_field :end_date, class: "form-control", required: true %>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <%= f.submit "Save changes", class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <!-- Toaster pour afficher la confirmation -->
 <% if flash[:notice] %>
