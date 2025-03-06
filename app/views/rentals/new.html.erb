@@ -5,8 +5,8 @@
         <div class="card-body">
 
           <!-- Titre -->
-          <h1 class="text-center text-primary fw-bold">🚗 Réservation</h1>
-          <h4 class="text-center text-muted mb-4">Détails de la voiture</h4>
+          <h1 class="text-center text-primary fw-bold">🚗 Reservation</h1>
+          <h4 class="text-center text-muted mb-4">Car details</h4>
 
           <!-- Message d'erreur -->
           <% if flash[:alert] %>
@@ -29,10 +29,10 @@
           <p class="text-center text-muted"><%= @car.description %></p>
 
           <ul class="list-group mb-4">
-            <li class="list-group-item"><strong>🗓 Année :</strong> <%= @car.year %></li>
+            <li class="list-group-item"><strong>🗓 Year :</strong> <%= @car.year %></li>
             <li class="list-group-item"><strong>🚗 Kilométrage :</strong> <%= @car.km %> km</li>
-            <li class="list-group-item"><strong>💰 Prix par jour :</strong> <%= number_to_currency(@car.price, unit: "€") %></li>
-            <li class="list-group-item"><strong>📍 Localisation :</strong> <%= @car.location %></li>
+            <li class="list-group-item"><strong>💰 Price per day :</strong> <%= number_to_currency(@car.price, unit: "€") %></li>
+            <li class="list-group-item"><strong>📍 Location :</strong> <%= @car.location %></li>
           </ul>
 
           <!-- Formulaire de réservation -->
@@ -55,15 +55,15 @@
 
             <!-- Détails du prix -->
             <div class="bg-light p-3 rounded shadow-sm">
-              <p><strong>💰 Prix par jour :</strong> <span data-rental-price-target="price"><%= @car.price %></span> €</p>
-              <p><strong>📆 Nombre de jours :</strong> <span data-rental-price-target="days">0</span> jours</p>
-              <p class="fw-bold fs-5"><strong>💸 Total :</strong> <span data-rental-price-target="totalPrice">Calcul en cours...</span> €</p>
+              <p><strong>💰 Price per day :</strong> <span data-rental-price-target="price"><%= @car.price %></span> €</p>
+              <p><strong>📆 Number of days :</strong> <span data-rental-price-target="days">0</span> jours</p>
+              <p class="fw-bold fs-5"><strong>💸 Total :</strong> <span data-rental-price-target="totalPrice">Calculation in progress...</span> €</p>
             </div>
 
             <!-- Boutons d'action -->
             <div class="text-center mt-4">
               <%= link_to "↩ Retour", cars_path, class: "btn btn-secondary btn-lg ms-2" %>
-              <%= f.submit "Réserver ✅", class: "btn btn-success btn-lg" %>
+              <%= f.submit "Reserve ✅", class: "btn btn-success btn-lg" %>
             </div>
           <% end %>
 
