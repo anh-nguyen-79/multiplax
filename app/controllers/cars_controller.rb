@@ -43,16 +43,16 @@ class CarsController < ApplicationController
   # POST /cars
   def create
     @car = Car.new(car_params)
+    @car.user = current_user
 
-    # Associer l'utilisateur actuel à la voiture si l'utilisateur est connecté
-    @car.user = current_user if user_signed_in?
-
-    if @car.save
-      redirect_to cars_path, notice: 'Car was successfully created.'
-    else
-      # Ajouter un message flash d'erreur
-      flash.now[:alert] = "There were errors in your submission. Please check the form."
-      render :new, status: :unprocessable_entity
+    respond_to do |format|
+      if @car.save
+        format.html { redirect_to car_url(@car), notice: "Car was successfully created." }
+        format.json { render json: @car, status: :created }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @car.errors, status: :unprocessable_entity }
+      end
     end
   end
 

@@ -12,6 +12,7 @@ class Car < ApplicationRecord
   validates :price, presence: { message: "must be provided" },
                    numericality: { greater_than: 0, message: "must be greater than zero" }
   validates :location, presence: { message: "must be provided" }
+  validate :images_presence
 
   # Active Storage
   has_many_attached :images
@@ -19,4 +20,10 @@ class Car < ApplicationRecord
   # Geocoding
   geocoded_by :location
   after_validation :geocode, if: :will_save_change_to_location?
+
+  private
+
+  def images_presence
+    errors.add(:images, "must be attached") unless images.attached?
+  end
 end
