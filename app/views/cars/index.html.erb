@@ -13,24 +13,40 @@
   <%= render 'shared/background' %>
   
   <div class="search-section">
-    <div class="location-search-bar">
-      <%= form_tag cars_path, method: :get, class: "d-flex" do %>
-        <%= text_field_tag :query,
-          params[:query],
-          class: "form-control",
-          placeholder: "Location (default: Paris)"
-        %>
-        <%= date_field_tag :start_date,
-          params[:start_date],
-          class: "form-control",
-          placeholder: "Start Date"
-        %>
-        <%= date_field_tag :end_date,
-          params[:end_date],
-          class: "form-control",
-          placeholder: "End Date"
-        %>
-      <% end %>
+    <div class="search-container">
+      <div class="location-search-bar">
+        <%= form_tag cars_path, method: :get, class: "d-flex" do %>
+          <%= text_field_tag :query,
+            params[:query],
+            class: "form-control",
+            placeholder: "Location (default: Paris)"
+          %>
+          <%= date_field_tag :start_date,
+            params[:start_date],
+            class: "form-control",
+            placeholder: "Start Date"
+          %>
+          <%= date_field_tag :end_date,
+            params[:end_date],
+            class: "form-control",
+            placeholder: "End Date"
+          %>
+        <% end %>
+      </div>
+      
+      <div data-controller="toggle">
+        <% if user_signed_in? %>
+          <button type="button" class="btn-rainbow" data-action="click->toggle#fire">
+            Add a new car
+          </button>
+        <% else %>
+          <%= link_to 'Add a car', new_user_session_path, class: "btn-rainbow" %>
+        <% end %>
+        
+        <div data-toggle-target="togglableElement" class="car-form-container d-none">
+          <%= render "form", car: @car %>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -113,21 +129,6 @@
   </div>
 </div>
 
-<!-- Section pour ajouter une voiture - visible pour tous les utilisateurs -->
-<div class="add-car">
-  <!-- Lien vers le formulaire de création d'une nouvelle voiture -->
-  <% if user_signed_in? %>
-      <div data-controller="toggle" class="mt-5">
-        <button data-action="click->toggle#fire" class="btn btn-custom">Add a new car</button>
-        <div data-toggle-target="togglableElement" class="d-none">
-          <%= render "form", car: @car %>
-        </div>
-      </div>
-    <%# <%= link_to 'Add a car', new_car_path, class: 'btn btn-primary' %>
-  <% else %>
-      <%= link_to 'Add a car', new_user_session_path, class: "btn btn-custom" %>
-  <% end %>
-</div>
 
 <!-- Bouton pour voir les réservations -->
 <%# <div class="text-center my-4">

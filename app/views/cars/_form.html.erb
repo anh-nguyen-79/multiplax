@@ -1,45 +1,56 @@
 <div class="container">
 
-<%= simple_form_for @car, html: { class: 'new_car' } do |f| %>
+<%= form_with(model: @car, data: { controller: "car-form", action: "turbo:submit-end->car-form#handleSubmit" }) do |form| %>
+  <div data-car-form-target="errors" class="alert alert-danger d-none">
+    <!-- Les erreurs seront affichées ici -->
+  </div>
+
   <!-- Champ pour la phase/modèle de la voiture -->
   <div class="field">
-    <%= f.input :phase %>
+    <%= form.label :phase, class: "form-label" %>
+    <%= form.text_field :phase, class: "form-control", required: true %>
   </div>
 
   <!-- Champ pour la description détaillée de la voiture -->
   <div class="field">
-    <%= f.input :description %>
+    <%= form.label :description, class: "form-label" %>
+    <%= form.text_area :description, class: "form-control" %>
   </div>
 
   <!-- Champ pour télécharger plusieurs images de la voiture -->
   <div class="field">
-    <%= f.input :images, as: :file, input_html: { multiple: true } %>
+    <%= form.label :images, class: "form-label" %>
+    <%= form.file_field :images, multiple: true, class: "form-control" %>
   </div>
 
   <!-- Champ pour l'année de fabrication avec type number pour validation côté client -->
   <div class="field">
-    <%= f.input :year, input_html: { type: 'number' } %>
+    <%= form.label :year, class: "form-label" %>
+    <%= form.number_field :year, class: "form-control", input_html: { type: 'number' }, required: true %>
   </div>
 
   <!-- Champ pour le kilométrage avec type number pour validation côté client -->
   <div class="field">
-    <%= f.input :km, input_html: { type: 'number' } %>
+    <%= form.label :km, class: "form-label" %>
+    <%= form.number_field :km, class: "form-control", input_html: { type: 'number' }, required: true %>
   </div>
 
   <!-- Champ pour le prix avec type number et step pour permettre les décimales -->
   <div class="field">
-    <%= f.input :price, input_html: { type: 'number', step: '0.01' } %>
+    <%= form.label :price, class: "form-label" %>
+    <%= form.number_field :price, class: "form-control", input_html: { type: 'number', step: '0.01' }, required: true, min: 1 %>
   </div>
 
   <!-- Champ pour la localisation de la voiture -->
   <div class="field">
-    <%= f.input :location %>
+    <%= form.label :location, class: "form-label" %>
+    <%= form.text_field :location, class: "form-control", required: true %>
   </div>
 
   <!-- Bouton de retour vers la page d'accueil -->
   <div class="actions">
     <%= link_to 'Back', root_path, class: 'btn btn-secondary' %>
-    <%= f.submit 'Create Car', class: 'btn btn-primary' %>
+    <%= form.submit 'Create Car', class: 'btn btn-primary' %>
   </div>
 <% end %>
 
