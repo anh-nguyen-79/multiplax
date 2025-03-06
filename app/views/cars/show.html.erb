@@ -37,17 +37,29 @@
         </div>
       <% end %>
     </div>
-
-    <div class="col-md-6">
-      <div class="card shadow-lg bg-white p-3 rounded-3 mb-3">
-        <div class="card-body">
-          <h3 class="text-primary">Détails</h3>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item"><strong>Year :</strong> <%= @car.year %></li>
-            <li class="list-group-item"><strong>Kilometers :</strong> <%= @car.km %> km</li>
-            <li class="list-group-item"><strong>Price per day :</strong> <%= number_to_currency(@car.price, unit: "€") %></li>
-            <li class="list-group-item"><strong>Location :</strong> <%= @car.location %></li>
-          </ul>
+      <div class="col-md-6">
+        <div class="card shadow-lg bg-white p-3 rounded-3 mb-3">
+          <div class="card-body">
+            <h3 class="text-primary">Détails</h3>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <i class="fas fa-calendar-alt me-2"></i>
+                <strong>Year :</strong> <%= @car.year %>
+              </li>
+              <li class="list-group-item">
+                <i class="fas fa-tachometer-alt me-2"></i>
+                <strong>Kilometers :</strong> <%= @car.km %> km
+              </li>
+              <li class="list-group-item">
+                <i class="fas fa-euro-sign me-2"></i>
+                <strong>Price per day :</strong> <%= number_to_currency(@car.price, unit: "€") %>
+              </li>
+              <li class="list-group-item">
+                <i class="fas fa-map-marker-alt me-2"></i>
+                <strong>Location :</strong> <%= @car.location %>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
 
