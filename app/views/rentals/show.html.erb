@@ -76,7 +76,7 @@
 
 <!-- Toaster pour afficher la confirmation -->
 <% if flash[:notice] %>
-  <div class="alert alert-success position-fixed bottom-0 end-0 p-3" id="toaster" data-controller="toaster" style="z-index: 1000;">
+  <div class="alert alert-success position-fixed bottom-0 end-0 p-3" id="toaster" data-controller="toaster">
     <%= flash[:notice] %>
   </div>
 <% end %>

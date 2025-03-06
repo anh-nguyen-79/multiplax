@@ -25,15 +25,6 @@
           </div>
 
           <!-- Informations voiture -->
-          <h3 class="text-center"><%= @car.phase %></h3>
-          <p class="text-center text-muted"><%= @car.description %></p>
-
-          <ul class="list-group mb-4">
-            <li class="list-group-item"><strong>🗓 Year :</strong> <%= @car.year %></li>
-            <li class="list-group-item"><strong>🚗 Kilométrage :</strong> <%= @car.km %> km</li>
-            <li class="list-group-item"><strong>💰 Price per day :</strong> <%= number_to_currency(@car.price, unit: "€") %></li>
-            <li class="list-group-item"><strong>📍 Location :</strong> <%= @car.location %></li>
-          </ul>
 
           <!-- Formulaire de réservation -->
           <%= form_with model: @rental, url: rentals_path, method: :post,
