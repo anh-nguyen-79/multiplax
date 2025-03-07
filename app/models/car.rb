@@ -1,6 +1,7 @@
 class Car < ApplicationRecord
   # Relation avec le modèle User
   belongs_to :user, optional: true
+  has_many :rentals
 
   # Validations
   validates :phase, presence: { message: "must be provided" }

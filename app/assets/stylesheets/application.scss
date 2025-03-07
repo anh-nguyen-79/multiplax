@@ -119,22 +119,22 @@
 /* Effet bulle avec pseudo-élément */
 .total-container::before {
   content: "";
-  position: absolute;
+  position: absolute; /* change 'relative' à 'absolute' pour un positionnement plus précis */
   top: 50%;
-  left: -15px;
+  left: 100%; /* positionne l'élément juste après le bord de la bulle */
   width: 30px;
   height: 30px;
   background: inherit;
   border-radius: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-50%) rotate(45deg);
   box-shadow: inset 5px 5px 10px rgba(255, 255, 255, 0.2);
 }
 body {
-  background-image: url('background.jpg'); /* Chemin de ton image */
-  background-size: cover;  /* Ajuste l’image sans déformation */
-  background-position: center; /* Centre l’image */
-  background-repeat: no-repeat; /* Évite la répétition */
-  background-attachment: fixed; /* Effet de parallaxe (optionnel) */
+  background-image: url('background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 .card {
   backdrop-filter: blur(5px);
@@ -170,8 +170,8 @@ body {
   .car-details {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;/* Centre le texte */
-    text-align: left; /* Centre le texte dans chaque élément */
+    align-items: flex-start;
+    text-align: left;
     gap: 10px;
     padding: 20px;
     background: #f8f9fa;
@@ -184,7 +184,7 @@ body {
   .car-detail-item {
     display: flex;
     align-items: center;
-    justify-content: center; /* Centre horizontalement */
+    justify-content: center;
     gap: 10px;
     font-size: 18px;
     font-weight: bold;
@@ -193,7 +193,7 @@ body {
     background: white;
     border-radius: 8px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    width: 100%; /* Prend toute la largeur du conteneur */
+    width: 100%;
   }
 
   .car-detail-item i {

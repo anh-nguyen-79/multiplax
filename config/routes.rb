@@ -23,8 +23,9 @@ Rails.application.routes.draw do
     collection do
       get :nearby
     end
+    resources :rentals, only: [:new, :create]
   end
-  resources :rentals, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
+  resources :rentals, only: [:index, :show, :edit, :update, :destroy] do
     member do
       patch :cancel  # 🚨 Cette route attend une requête PATCH, pas GET
     end
