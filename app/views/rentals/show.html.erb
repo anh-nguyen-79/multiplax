@@ -1,11 +1,11 @@
 <%= render "shared/navbar" %>
 <%= render 'shared/background' %>
 
-<div class="container">
-  <h1 class="text-center my-4">Review your booking</h1>
+<!--<div class="container">
+  <h1 class="text-center my-4">Review your booking</h1> -->
 
     <!-- Colonne des informations -->
-    <div class="col-md-6">
+    <!--<div class="col-md-6">
       <h3 class="text-center"><%= @car.phase %></h3>
       <p class="text-center text-muted"><%= @car.description %></p>
 
@@ -28,92 +28,227 @@
       <p><strong>Pick-up Date:</strong> <%= @rental.start_date.strftime("%d/%m/%Y") %></p>
       <p><strong>Return Date:</strong> <%= @rental.end_date.strftime("%d/%m/%Y") %></p>
 
-  <hr>
-  <h3 class="text-center text-success">Payment Details</h3>
-  <p><strong>Price per day:</strong> <%= @car.price %> €</p>
-  <p><strong>Number of Days:</strong> <%= (@rental.end_date - @rental.start_date).to_i %> days</p>
-  <h3 class="text-center"><strong>Total:</strong> <%= @rental.price %> €</h3>
+      <hr>
+        <h3 class="text-center text-success">Payment Details</h3>
+        <p><strong>Price per day:</strong> <%= @car.price %> €</p>
+        <p><strong>Number of Days:</strong> <%= (@rental.end_date - @rental.start_date).to_i %> days</p>
+        <h3 class="text-center"><strong>Total:</strong> <%= @rental.price %> €</h3>
+      <hr> -->
 
-  <hr>
-
-  <!-- Boutons d'action -->
-  <div class="d-flex justify-content-between">
-    <%= link_to "Retour", cars_path, class: "btn btn-secondary w-30" %>
-    <%# <%= link_to "Edit", edit_rental_path(@rental), class: "btn btn-primary w-30" %>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal">
-  Edit
-</button>
-      <% if @rental.status == "confirmed" %>
-        <button class="btn btn-danger w-30" data-bs-toggle="modal" data-bs-target="#cancelModal">
-          ❌ Cancel
-        </button>
-      <% end %>
-  </div>
-</div>
-
-<!-- Modal pour annulation -->
-<div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="cancelModalLabel">Cancellation Confirmation</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        Are you sure you want to cancel this booking?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-        <%= link_to "Yes, cancel", cancel_rental_path(@rental), method: :patch, class: "btn btn-danger" %>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- Modal de modificacition de la réservation -->
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editModalLabel">Edit the booking</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="text-center">
-          <% if @car.images.attached? && @car.images.first.present? %>
-            <%= cl_image_tag @car.images.first.key, class: "img-fluid rounded", style: "max-height: 250px; object-fit: cover;" %>
-          <% else %>
-            <img src="<%= asset_path 'default_car.png' %>" alt="Default Image" class="img-fluid rounded" style="width: 100%; max-height: 250px; object-fit: cover;">
+      <!-- Boutons d'action -->
+      <!--<div class="d-flex justify-content-between">
+        <%= link_to "Retour", cars_path, class: "btn btn-secondary w-30" %>
+        <%# <%= link_to "Edit", edit_rental_path(@rental), class: "btn btn-primary w-30" %>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
+          <% if @rental.status == "confirmed" %>
+            <button class="btn btn-danger w-30" data-bs-toggle="modal" data-bs-target="#cancelModal">Cancel</button>
           <% end %>
-        </div>
-
-        <!-- Formulaire de modification -->
-        <%= form_with model: @rental, url: rental_path(@rental), method: :patch, data: { turbo: false } do |f| %>
-          <div class="mb-3">
-            <%= f.label :start_date, "Pick-up Date" %>
-            <%= f.date_field :start_date, class: "form-control", required: true %>
-          </div>
-
-          <div class="mb-3">
-            <%= f.label :end_date, "Return Date" %>
-            <%= f.date_field :end_date, class: "form-control", required: true %>
-          </div>
-
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <%= f.submit "Save changes", class: "btn btn-outline-success" %>
-          </div>
-        <% end %>
       </div>
-    </div>
-  </div>
+    </div> -->
+
+      <!-- Modal pour annulation -->
+      <!-- <div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="cancelModalLabel">Cancellation Confirmation</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body"> Are you sure you want to cancel this booking? </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+              <%= link_to "Yes, cancel", cancel_rental_path(@rental), method: :patch, class: "btn btn-danger" %>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+      <!-- Modal de modificacition de la réservation -->
+      <!-- <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="editModalLabel">Edit the booking</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="text-center">
+                <% if @car.images.attached? && @car.images.first.present? %>
+                  <%= cl_image_tag @car.images.first.key, class: "img-fluid rounded", style: "max-height: 250px; object-fit: cover;" %>
+                <% else %>
+                  <img src="<%= asset_path 'default_car.png' %>" alt="Default Image" class="img-fluid rounded" style="width: 100%; max-height: 250px; object-fit: cover;">
+                <% end %>
+              </div> -->
+
+              <!-- Formulaire de modification -->
+              <!-- <%= form_with model: @rental, url: rental_path(@rental), method: :patch, data: { turbo: false } do |f| %>
+                <div class="mb-3">
+                  <%= f.label :start_date, "Pick-up Date" %>
+                  <%= f.date_field :start_date, class: "form-control", required: true %>
+                </div>
+                <div class="mb-3">
+                  <%= f.label :end_date, "Return Date" %>
+                  <%= f.date_field :end_date, class: "form-control", required: true %>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <%= f.submit "Save changes", class: "btn btn-outline-success" %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+      <!-- Toaster pour afficher la confirmation -->
+      <!-- <% if flash[:notice] %>
+        <div class="alert alert-success position-fixed bottom-0 end-0 p-3" id="toaster" data-controller="toaster">
+          <%= flash[:notice] %>
+        </div>
+      <% end %>
+</div> -->
+
+<div class="container mt-4">
+  <h1 class="text-center my-4">Review your booking</h1>
+        <div class="card p-3">
+            <div class="row g-0">
+                <!-- Image à gauche -->
+                <div class="col-md-4">
+                  <% if @car.images.attached? && @car.images.first.present? %>
+                    <%= cl_image_tag @car.images.first.key, class: "img-fluid rounded", style: "width: 100%; max-height: 250px; object-fit: cover;" %>
+                  <% else %>
+                    <img src="<%= app/assets/images/default_car.png %>" alt="Image par défaut" class="img-fluid rounded" style="width: 100%; max-height: 250px; object-fit: cover;">
+                  <% end %>
+                </div>
+                <!-- Contenu à droite -->
+                <div class="col-md-8">
+                    <div class="card-body">
+                      <!-- Description -->
+                        <div class="car-details">
+                          <h3><%= @car.phase %></h3>
+                          <p class="text-muted"><%= @car.description %></p>
+                          <div class="car-info"><i class="fas fa-calendar-alt"></i> <span>Year: <%= @car.year %></span></div>
+                          <div class="car-info"><i class="fas fa-road"></i> <span>Kilometer: <%= @car.km %> km</span></div>
+                          <div class="car-info"><i class="fas fa-euro-sign"></i> <span>Price per day: <%= number_to_currency(@car.price, unit: "€") %></span></div>
+                          <div class="car-info"><i class="fas fa-map-marker-alt"></i> <span>Location: <%= @car.location %></span></div>
+                        </div>
+                      <!-- Détail -->
+                        <div class="car-details">
+                          <h3>Rental Period</h3>
+                          <p><strong>Pick-up Date:</strong> <%= @rental.start_date.strftime("%d/%m/%Y") %></p>
+                          <p><strong>Return Date:</strong> <%= @rental.end_date.strftime("%d/%m/%Y") %></p>
+                        </div>
+                      <!-- Paiement -->
+                        <div class="car-details">
+                          <h3>Payment Details</h3>
+                          <p><strong>Price per day:</strong> <%= @car.price %> €</p>
+                          <p><strong>Number of Days:</strong> <%= (@rental.end_date - @rental.start_date).to_i %> days</p>
+                          <h3 class="text-center"><strong>Total:</strong> <%= @rental.price %> €</h3>
+                        </div>
+                      <!-- Boutons -->
+                        <div>
+                            <div class="d-flex justify-content-evenly">
+                              <%= link_to "Retour", cars_path, class: "btn btn-secondary w-30" %>
+                              <%# <%= link_to "Edit", edit_rental_path(@rental), class: "btn btn-primary w-30" %>
+                              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
+                                <% if @rental.status == "confirmed" %>
+                                  <button class="btn btn-danger w-30" data-bs-toggle="modal" data-bs-target="#cancelModal">Cancel</button>
+                                <% end %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <!-- Modal pour annulation -->
+      <div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="cancelModalLabel">Cancellation Confirmation</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body"> Are you sure you want to cancel this booking? </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+          <%= link_to "Yes, cancel", cancel_rental_path(@rental), method: :patch, class: "btn btn-danger"%>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal de modificacition de la réservation -->
+      <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="editModalLabel">Edit the booking</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="text-center">
+                <% if @car.images.attached? && @car.images.first.present? %>
+                  <%= cl_image_tag @car.images.first.key, class: "img-fluid rounded", style: "max-height: 250px; object-fit: cover;" %>
+                <% else %>
+                  <img src="<%= asset_path 'default_car.png' %>" alt="Default Image" class="img-fluid rounded" style="width: 100%; max-height: 250px; object-fit: cover;">
+                <% end %>
+              </div>
+
+              <!-- Formulaire de modification -->
+              <%= form_with model: @rental, url: rental_path(@rental), method: :patch, data: { turbo: false } do |f| %>
+                <div class="mb-3">
+                  <%= f.label :start_date, "Pick-up Date" %>
+                  <%= f.date_field :start_date, class: "form-control", required: true %>
+                </div>
+                <div class="mb-3">
+                  <%= f.label :end_date, "Return Date" %>
+                  <%= f.date_field :end_date, class: "form-control", required: true %>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <%= f.submit "Save changes", class: "btn btn-outline-success" %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Toaster pour afficher la confirmation -->
+      <% if flash[:notice] %>
+        <div class="alert alert-success position-fixed bottom-0 end-0 p-3" id="toaster" data-controller="toaster">
+          <%= flash[:notice] %>
+        </div>
+      <% end %>
 </div>
+<%= render "shared/footer" %>
 
+<!-- <div class="container mt-5">
+  <h1 class="text-primary fw-bold text-center mb-4"><%= "Review your booking" %></h1>
+  <div class="row align-items-center">
+    <div class="col-md-6 d-flex justify-content-center">
+        <div id="carCarousel" class="carousel slide rounded-3 shadow-sm w-100" data-bs-ride="carousel" style="max-width: 500px; height: 400px;">
+          <div class="carousel-inner">
+            <% if @car.images.attached? && @car.images.first.present? %>
+              <%= cl_image_tag @car.images.first.key, class: "img-fluid rounded", style: "width: 100%; max-height: 250px; object-fit: cover;" %>
+            <% else %>
+              <img src="<%= app/assets/images/default_car.png %>" alt="Image par défaut" class="img-fluid rounded" style="width: 100%; max-height: 250px; object-fit: cover;">
+            <% end %>
+          </div>
+        </div>
+    </div>
 
-<!-- Toaster pour afficher la confirmation -->
-<% if flash[:notice] %>
-  <div class="alert alert-success position-fixed bottom-0 end-0 p-3" id="toaster" data-controller="toaster">
-    <%= flash[:notice] %>
+    <div class="col-md-6">
+      <div class="card shadow-lg bg-white p-3 rounded-3 mb-3">
+        <div class="card-body">
+          <h3 class="text-dark">Details</h3>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item"><strong>Year :</strong> <%= @car.year %></li>
+            <li class="list-group-item"><strong>Kilometers :</strong> <%= @car.km %> km</li>
+            <li class="list-group-item"><strong>Price per day :</strong> <%= number_to_currency(@car.price, unit: "€") %></li>
+            <li class="list-group-item"><strong>Location :</strong> <%= @car.location %></li>
+          </ul>
+        </div>
+      </div>
   </div>
-<% end %>
+</div> -->

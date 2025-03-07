@@ -22,7 +22,7 @@ class RentalsController < ApplicationController
   def create
     @car = Car.find_by(id: rental_params[:car_id])
     unless @car
-      redirect_to cars_path, alert: "🚨 Voiture introuvable !" and return
+      redirect_to cars_path, alert: "Car not found!" and return
     end
 
     @rental = Rental.new(rental_params)
@@ -31,7 +31,7 @@ class RentalsController < ApplicationController
     @rental.price = @car.price * (@rental.end_date - @rental.start_date).to_i
 
     if @rental.save
-      flash[:notice] = "✅ Booked!"
+      flash[:notice] = "Booked!"
       redirect_to rentals_path(anchor: "loueur")
     else
       flash[:alert] = @rental.errors.full_messages.join(", ")
@@ -47,25 +47,25 @@ class RentalsController < ApplicationController
   def update
     if @rental.update(rental_params)
       @rental.update(price: @rental.car.price * (@rental.end_date - @rental.start_date).to_i)  # Recalcule le prix
-      flash[:notice] = "✅ Updated !"
+      flash[:notice] = "Updated !"
       redirect_to rental_path(@rental)  # ✅ Reste sur la page de réservation
     else
-      flash[:alert] = "❌ Oops sommthong went wrong."
+      flash[:alert] = "Oops something went wrong."
       render :edit, status: :unprocessable_entity
     end
   end
   def destroy
     @rental.destroy
-    flash[:notice] = "🚨 Deletted !"
+    flash[:notice] = "Deletted !"
     redirect_to rentals_path
   end
 
   def cancel
     if @rental.status == "confirmed"
       @rental.update(status: "canceled")
-      flash[:notice] = "🚗 Done!"
+      flash[:notice] = "Done!"
     else
-      flash[:alert] = "⚠️ This booking is already canceled."
+      flash[:alert] = "This booking is already canceled."
     end
     redirect_to rentals_path
   end

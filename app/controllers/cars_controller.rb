@@ -47,10 +47,10 @@ class CarsController < ApplicationController
 
   respond_to do |format|
     if @car.save
-      format.html { redirect_to rentals_path(tab: "loueur"), notice: "🚗 Car added successfully!" }
+      format.html { redirect_to rentals_path(tab: "loueur"), notice: "Car added successfully!" }
       format.json { render json: @car, status: :created }
     else
-      flash.now[:alert] = "🚨 There were errors in your submission. Please check the form."
+      flash.now[:alert] = "There were errors in your submission. Please check the form."
       format.html { render :new, status: :unprocessable_entity }
       format.json { render json: @car.errors, status: :unprocessable_entity }
     end
