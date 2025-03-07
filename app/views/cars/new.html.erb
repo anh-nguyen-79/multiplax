@@ -18,4 +18,6 @@
 
 <!-- Formulaire utilisant simple_form pour la création d'une voiture -->
 <!-- La classe 'new_car' est ajoutée pour faciliter le ciblage CSS -->
-<%= render "form", car: @car %>
+<div data-controller="car-form">
+  <%= render 'form', car: @car %>
+</div>
