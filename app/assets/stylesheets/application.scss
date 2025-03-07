@@ -119,14 +119,14 @@
 /* Effet bulle avec pseudo-élément */
 .total-container::before {
   content: "";
-  position: absolute;
+  position: absolute; /* change 'relative' à 'absolute' pour un positionnement plus précis */
   top: 50%;
-  left: -15px;
+  left: 100%; /* positionne l'élément juste après le bord de la bulle */
   width: 30px;
   height: 30px;
   background: inherit;
   border-radius: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-50%) rotate(45deg);
   box-shadow: inset 5px 5px 10px rgba(255, 255, 255, 0.2);
 }
 body {
