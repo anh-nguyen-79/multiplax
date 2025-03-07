@@ -21,11 +21,6 @@ class RentalsController < ApplicationController
 
   def create
     @car = Car.find(params[:car_id])
-    unless @car
-
-      redirect_to cars_path, alert: "🚨 Car not found !" and return
-
-    end
 
     @rental = Rental.new(rental_params)
     @rental.user = current_user
@@ -73,9 +68,11 @@ class RentalsController < ApplicationController
   end
 
   private
+
   def set_rental
     @rental = Rental.find(params[:id])
   end
+
   def rental_params
     params.require(:rental).permit(:start_date, :end_date, :price, :status, :user)
   end
