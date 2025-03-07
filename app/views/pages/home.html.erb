@@ -3,15 +3,17 @@
   <div class="image-container">
     <div class="header">
     </div>
-    <div class="search-bar-container">
+    <div class="search-bar-container ">
       <form action="/search" method="get" class="search-form">
-        <input type="text" name="query" placeholder="where do I want my multipla..." required>
+        <input type="text" name="query" placeholder="Where do I want my multipla..." required>
         <%= link_to cars_path do %>
           <div class="search-icon"></div>
         <% end %>
       </form>
 
-      <div class="calendar-container">
+
+
+      <!-- <div class="calendar-container">
         <div class="calendar-wrapper">
           <label for="start_date">Start</label>
           <input type="date" id="start_date" name="start_date" required>
@@ -20,7 +22,7 @@
           <label for="end_date">End</label>
           <input type="date" id="end_date" name="end_date" required>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
   <div class="footer">
