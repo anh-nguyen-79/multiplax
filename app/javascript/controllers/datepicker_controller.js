@@ -3,19 +3,56 @@ import flatpickr from "flatpickr";
 
 
 export default class extends Controller {
+  static targets = ["range", "startDate", "endDate", "price", "totalPrice", "days"];
+
   connect() {
-    console.log("Stimulus controller connected!");
+    this.picker = flatpickr(this.rangeTarget, {
+      mode: "range",
+      minDate: "today",
+      dateFormat: "Y-m-d",
+      onChange: (selectedDates) => {
+        if (selectedDates.length > 1) {
+          const startDate = selectedDates[0]
+          this.startDateTarget.value = startDate.toLocaleDateString("fr-FR");
 
-    // Target the inputs by ID (if they have specific IDs like start_date and end_date)
-    const startDateInput = this.element.querySelector("#rental_start_date");
-    const endDateInput = this.element.querySelector("#rental_end_date");
+          const endDate = selectedDates[1];
+          this.endDateTarget.value = endDate.toLocaleDateString("fr-FR");
+          this.calculate(selectedDates)
+        }
+      }
+    });
+  }
 
-    if (startDateInput && endDateInput) {
-      flatpickr([startDateInput, endDateInput], {
-        enableTime: false,
-        dateFormat: "Y-m-d",
-        minDate: "today",
-      });
+  calculate(selectedDates) {
+    // console.log("⚡ Calcul du prix en cours...");
+    const startDateValue = selectedDates[0];
+    // console.log(" Start Date Value:", startDateValue);
+
+    const endDateValue = selectedDates[1];
+    // console.log("End Date Value:", endDateValue);
+
+    // console.log("pricetest", this.priceTarget)
+    const pricePerDay = parseFloat(this.priceTarget.innerHTML);
+    // console.log(" Price Per Day:", pricePerDay);
+
+    const startDate = new Date(startDateValue);
+    const endDate = new Date(endDateValue);
+
+    // console.log("Parsed Start Date:", startDate);
+    // console.log("Parsed End Date:", endDate);
+
+
+    const diffDays = Math.floor((endDate - startDate) / (1000 * 60 * 60 * 24));
+    // console.log(" Nombre de jours:", diffDays);
+
+    const totalPrice = diffDays * pricePerDay;
+    // console.log(" Prix total:", totalPrice);
+
+    if (endDateValue !== "" && startDateValue !== "") {
+      // console.log("COUCOU");
+      this.daysTarget.textContent = diffDays;
+      this.totalPriceTarget.innerHTML = `${totalPrice}`;
     }
-}
+
+  }
 }

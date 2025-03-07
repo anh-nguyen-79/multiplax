@@ -31,7 +31,9 @@ class Rental < ApplicationRecord
                                 .where("start_date < ? AND end_date > ?", end_date, start_date)  # Vérifie les conflits
 
     if overlapping_rentals.exists?
+
       errors.add(:base, "🚨 Car already booked on this period!")
+
     end
   end
 end

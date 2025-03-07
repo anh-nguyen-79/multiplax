@@ -4,8 +4,8 @@
 <div class="container mt-5 ">
   <div class="row justify-content-center">
     <div class="col-md-8">
-      <div class="card shadow-lg p-4 rounded-4">
-        <div class="card-body">
+      <div class="card shadow-lg p-4 rounded-4" data-controller="datepicker">
+        <%= simple_form_for [@car, @rental], html: { class: 'card-body' } do |f| %>
 
           <!-- Titre -->
           <h1 class="text-center text-dark fw-bold mb-4">Reservation</h1>
@@ -19,42 +19,29 @@
         <% end %>
 
 
+          <div>
+            <%= f.input :range do %>
+              <%= text_field_tag :range, nil, class: "form-control string required", data: { datepicker_target: "range" } %>
+            <% end %>
 
-          <!-- Formulaire de réservation -->
-          <%= form_with model: @rental, url: rentals_path, method: :post,
-              data: { controller: "rental-price", rental_price_price_per_day_value: @car.price.to_i }, class: "mt-3" do |f| %>
-
-          <%= f.hidden_field :car_id, value: @car.id %>
-
-          <div class="mb-4">
-            <%= f.label :start_date, "Pick-up Date", class: "form-label fw-bold text-secondary" %>
-            <%= f.date_field :start_date, required: true,
-            class: "form-control p-3 rounded text-secondary",
-            data: { controller: "datepicker", action: "input->rental-price#calculate", rental_price_target: "startDate" } %>
+            <%= f.input :start_date, as: :hidden, input_html: { data: { datepicker_target: "startDate" } }  %>
+            <%= f.input :end_date, as: :hidden, input_html: { data: { datepicker_target: "endDate" } } %>
           </div>
 
-          <div class="mb-4">
-            <%= f.label :end_date, "Return Date", class: "form-label fw-bold text-secondary" %>
-            <%= f.date_field :end_date, required: true,
-            class: "form-control p-3 rounded text-secondary",
-            data: { controller: "datepicker", action: "input->rental-price#calculate", rental_price_target: "endDate" } %>
-          </div>
-
-            <!-- Détails du prix -->
+          <!-- Détails du prix -->
           <div class="bg-light p-4 rounded shadow-sm border">
-              <p class="mb-2 text-secondary"><strong> Price per day:</strong> <span data-rental-price-target="price"><%= @car.price %></span> €</p>
-              <p class="mb-2 text-secondary"><strong> Number of days :</strong> <span data-rental-price-target="days">0</span> jours</p>
-              <p class="fw-bold text-secondary"><strong> Total :</strong> <span data-rental-price-target="totalPrice">Calculation in progress...</span> €</p>
-            </div>
+            <p class="mb-2 text-secondary"><strong> Price per day:</strong> <span data-datepicker-target="price"><%= @car.price %></span> €</p>
+            <p class="mb-2 text-secondary"><strong> Number of days :</strong> <span data-datepicker-target="days">0</span> jours</p>
+            <p class="fw-bold text-secondary"><strong> Total :</strong> <span data-datepicker-target="totalPrice">Calculation in progress...</span> €</p>
+          </div>
 
             <!-- Boutons d'action -->
-            <div class="text-center mt-4">
-              <%= link_to "Retour", cars_path, class: "btn btn-outline-secondary btn-lg px-4 me-3" %>
-              <%= f.submit "Reservation", class: "btn btn-success btn-lg px-5 shadow-sm" %>
-            </div>
-          <% end %>
+          <div class="text-center mt-4">
+            <%= link_to "Retour", cars_path, class: "btn btn-outline-secondary btn-lg px-4 me-3" %>
+            <%= f.submit "Reservation", class: "btn btn-success btn-lg px-5 shadow-sm" %>
+          </div>
 
-        </div>
+        <% end %>
       </div>
     </div>
   </div>

@@ -13,14 +13,14 @@
   position: sticky;
   top: 0;
   z-index: 10;
-  background-color: rgba(255, 255, 255, 0.95); // Fond légèrement transparent
-  padding: 30px; // Ajoute du padding autour de la section
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 30px;
   margin-bottom: 20px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 
   .location-search-bar {
-    display: flex; // Assurez-vous que les champs sont alignés horizontalement
-    gap: 10px; // Ajoute un espacement entre les champs
+    display: flex;
+    gap: 10px;
   }
 
   .form-control {
@@ -126,7 +126,7 @@
   &.active {
     background-color: #f5f5f5;
     border-color: #666;
-    
+
     .fi-sr-angle-small-down {
       transform: rotate(180deg);
     }
@@ -163,7 +163,7 @@
   margin: 0 auto;
   padding: 2rem;
   background-color: #fff;
-  border-radius: 8%;
+  border-radius: 8px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
@@ -272,11 +272,11 @@
   border-radius: 8px;
   font-weight: 600;
   transition: all 0.3s ease;
-  
+
   i {
     margin-right: 8px;
   }
-  
+
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -293,7 +293,7 @@
 .modal-header {
   border-bottom: 1px solid #f0f0f0;
   padding: 20px 30px;
-  
+
   .modal-title {
     font-weight: 600;
     color: #333;
@@ -308,4 +308,4 @@
 .spinner-border {
   margin-right: 8px;
   vertical-align: middle;
-} 
+}

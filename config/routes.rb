@@ -23,8 +23,10 @@ Rails.application.routes.draw do
     collection do
       get :nearby
     end
+    resources :rentals, only: [:new, :create]
   end
-  resources :rentals do
+
+  resources :rentals, only: [:index, :show, :edit, :update, :destroy] do
     member do
       patch :cancel # Route pour annuler une réservation
       patch :validate  # Route pour valider une réservation

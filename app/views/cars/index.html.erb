@@ -13,29 +13,40 @@
   <%= render 'shared/background' %>
 
   <div class="search-section">
-    <div class="search-container">
+    <div class="search-container" data-controller="search">
       <div class="location-search-bar">
-        <%= form_tag cars_path, method: :get, class: "d-flex" do %>
+        <%= form_tag cars_path, method: :get, class: "d-flex", id: "search-form", data: { search_target: "form" } do %>
           <%= text_field_tag :query,
             params[:query],
             class: "form-control",
-            placeholder: "Location (default: Paris)"
+            placeholder: "Enter a location (e.g. Paris, Marseille)",
+            data: { search_target: "location", action: "change->search#search" }
           %>
           <%= date_field_tag :start_date,
             params[:start_date],
             class: "form-control",
-            placeholder: "Start Date"
+            placeholder: "Start Date",
+            data: { search_target: "startDate", action: "change->search#dateChanged" }
           %>
           <%= date_field_tag :end_date,
             params[:end_date],
             class: "form-control",
-            placeholder: "End Date"
+            placeholder: "End Date",
+            data: { search_target: "endDate", action: "change->search#dateChanged" }
           %>
-          <!-- faut avoir summit bouton? -->
+          <button type="submit" class="btn btn-primary search-btn">
+            <i class="fas fa-search"></i> Search
+          </button>
+          
+          <% if params[:query].present? || params[:start_date].present? || params[:end_date].present? %>
+            <button class="btn btn-outline-secondary" data-action="click->search#clearFilters">
+              <i class="fas fa-times"></i> Clear
+            </button>
+          <% end %>
         <% end %>
       </div>
 
-      <div data-controller="toggle">
+      <div class="toggle-container" data-controller="toggle">
         <% if user_signed_in? %>
           <button type="button" class="btn-rainbow" data-action="click->toggle#fire">
             Add a new car
@@ -48,49 +59,7 @@
           <%= render "form", car: @car %>
         </div>
       </div>
-    </div>
-  </div>
-
-  <div class="filters-section">
-    <div class="filters-container" data-controller="filters">
-      <div class="filter-buttons">
-        <button data-action="click->filters#togglePrice" class="filter-button">
-          <i class="fi fi-ts-money-bill-wave"></i> Price <i class="fi fi-sr-angle-small-down"></i>
-        </button>
-        <button data-action="click->filters#toggleKm" class="filter-button">
-          <i class="fi fi-ts-road"></i> Kilometers <i class="fi fi-sr-angle-small-down"></i>
-        </button>
-        <button data-action="click->filters#togglePhase" class="filter-button">
-          <i class="fi fi-ts-car"></i> Phase <i class="fi fi-sr-angle-small-down"></i>
-        </button>
-        <button data-action="click->filters#toggleYear" class="filter-button">
-          <i class="fi fi-ts-calendar"></i> Year <i class="fi fi-br-angle-small-down"></i>
-        </button>
-      </div>
-
-      <%= form_tag cars_path, method: :get, class: "filters-form" do %>
-        <div data-filters-target="priceFilter" class="filter-panel d-none">
-          <h4>Price</h4>
-          <%= range_field_tag :price_min, params[:price_min], min: 0, max: 500, class: "range-slider" %>
-          <span class="price-value"><%= params[:price_min] || 0 %>€ - 500€</span>
-        </div>
-
-        <div data-filters-target="kmFilter" class="filter-panel d-none">
-          <h4>Kilometers</h4>
-          <%= range_field_tag :km_min, params[:km_min], min: 0, max: 100000, class: "range-slider" %>
-          <span class="km-value"><%= params[:km_min] || 0 %> km - 100,000 km</span>
-        </div>
-
-        <div data-filters-target="phaseFilter" class="filter-panel d-none">
-          <h4>Phase</h4>
-          <%= select_tag :phase, options_for_select(['New', 'Used'], params[:phase]), include_blank: true, class: "form-control" %>
-        </div>
-
-        <div data-filters-target="yearFilter" class="filter-panel d-none">
-          <h4>Year</h4>
-          <%= select_tag :year, options_for_select((2000..Date.today.year).to_a.reverse, params[:year]), include_blank: true, class: "form-control" %>
-        </div>
-      <% end %>
+    
     </div>
   </div>
 
@@ -130,32 +99,25 @@
   </div>
 </div>
 
+<!-- Afficher les résultats de recherche -->
+<div data-search-target="results">
+  <% if params[:query].present? || params[:start_date].present? || params[:end_date].present? %>
+    <div class="search-results-info">
+      <h3>
+        <%= @cars.count %> cars available
+        <% if params[:query].present? %>
+          in "<%= params[:query] %>"
+        <% end %>
+        <% if params[:start_date].present? && params[:end_date].present? %>
+          from <%= params[:start_date] %> to <%= params[:end_date] %>
+        <% end %>
+      </h3>
+    </div>
+  <% end %>
+</div>
 
 <%= render "shared/footer" %>
 
 <!-- Bouton pour voir les réservations -->
 <%# <div class="text-center my-4">
   <%= link_to '📅 View Reservations', reservations_path, class: 'btn btn-primary btn-lg' %>
-
-<!-- Ajoutez ce bouton dans votre vue index -->
-<div class="add-car-button-container">
-  <button class="btn btn-primary add-car-btn" data-action="click->car-modal#open">
-    <i class="fas fa-plus-circle"></i> Add a new car
-  </button>
-</div>
-
-<!-- Modal pour le formulaire d'ajout de voiture -->
-<div id="car-modal" class="modal fade" data-controller="car-modal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Add a new car</h5>
-        <button type="button" class="btn-close" data-action="click->car-modal#close" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <!-- Le formulaire sera chargé ici -->
-        <div data-car-modal-target="formContainer"></div>
-      </div>
-    </div>
-  </div>
-</div>

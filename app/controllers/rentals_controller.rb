@@ -19,10 +19,9 @@ class RentalsController < ApplicationController
   end
 
   def create
-    @car = Car.find_by(id: rental_params[:car_id])
-    unless @car
-      redirect_to cars_path, alert: "🚨 Car not found!" and return
-    end
+
+    @car = Car.find(params[:car_id])
+
 
     @rental = Rental.new(rental_params)
     @rental.user = current_user
@@ -33,6 +32,7 @@ class RentalsController < ApplicationController
     if @rental.save
       flash[:notice] = "✅ Request sent to the host!"
       redirect_to rentals_path
+
     else
       flash[:alert] = @rental.errors.full_messages.join(", ")
       render :new, status: :unprocessable_entity
@@ -98,6 +98,8 @@ class RentalsController < ApplicationController
   end
 
   def rental_params
-    params.require(:rental).permit(:start_date, :end_date, :price, :status, :car_id)
+
+    params.require(:rental).permit(:start_date, :end_date, :price, :status, :user)
+
   end
 end

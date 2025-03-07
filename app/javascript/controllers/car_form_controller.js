@@ -85,13 +85,23 @@ export default class extends Controller {
   backToIndex(event) {
     event.preventDefault()
     
-    // Fermer le modal si présent
-    const modal = this.element.closest('.modal')
-    if (modal && modal.dataset.controller === 'car-modal') {
-      const controller = this.application.getControllerForElementAndIdentifier(modal, 'car-modal')
-      if (controller) {
-        controller.close()
+    // Si nous sommes à la première étape, fermer la modal ou rediriger
+    if (this.currentStep === 0) {
+      // Si nous sommes dans une modal, la fermer
+      const modal = this.element.closest('.modal')
+      if (modal && modal.dataset.controller === 'car-modal') {
+        const controller = this.application.getControllerForElementAndIdentifier(modal, 'car-modal')
+        if (controller) {
+          controller.close()
+        }
+      } else {
+        // Si nous ne sommes pas dans une modal, rediriger vers l'index
+        window.location.href = '/cars'
       }
+    } else {
+      // Si nous sommes à une étape ultérieure, revenir à l'étape précédente
+      this.currentStep--
+      this.updateUI()
     }
   }
 

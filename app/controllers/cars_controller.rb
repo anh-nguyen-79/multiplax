@@ -2,15 +2,53 @@ class CarsController < ApplicationController
   # Action pour afficher toutes les voitures
   # GET /cars
   def index
+    # Initialiser la requête de base
     @cars = Car.all
-    # @rentals = current_user.rentals if user_signed_in?
-    # Vérifier si des voitures ont des coordonnées
-    @markers = []
     @car = Car.new
-
+    
+    # Filtrer par localisation si spécifiée (sans geocoder)
+    if params[:query].present?
+      @cars = @cars.by_location(params[:query])
+    end
+    
+    # Filtrer par disponibilité de dates si spécifiées
+    if params[:start_date].present? && params[:end_date].present?
+      start_date = Date.parse(params[:start_date])
+      end_date = Date.parse(params[:end_date])
+      
+      # Exclure les voitures qui ont des réservations pendant cette période
+      @cars = @cars.where.not(id: Rental.where(
+        "(start_date <= ? AND end_date >= ?) OR (start_date <= ? AND end_date >= ?) OR (start_date >= ? AND end_date <= ?)",
+        start_date, start_date, end_date, end_date, start_date, end_date
+      ).select(:car_id))
+    end
+    
+    # Filtrer par prix minimum si spécifié
+    if params[:price_min].present?
+      @cars = @cars.where("price >= ?", params[:price_min])
+    end
+    
+    # Filtrer par kilométrage minimum si spécifié
+    if params[:km_min].present?
+      @cars = @cars.where("km >= ?", params[:km_min])
+    end
+    
+    # Filtrer par phase si spécifiée
+    if params[:phase].present?
+      @cars = @cars.where(phase: params[:phase])
+    end
+    
+    # Filtrer par année si spécifiée
+    if params[:year].present?
+      @cars = @cars.where(year: params[:year])
+    end
+    
+    # Préparer les marqueurs pour la carte
+    @markers = []
+    
     if @cars.any?
       geocoded_cars = @cars.geocoded
-
+      
       if geocoded_cars.any?
         @markers = geocoded_cars.map do |car|
           {
@@ -21,9 +59,10 @@ class CarsController < ApplicationController
         end
       end
     end
-
+    
     # Ajouter un log pour le débogage
-    Rails.logger.debug "Markers: #{@markers.inspect}"
+    Rails.logger.debug "Filtered cars count: #{@cars.count}"
+    Rails.logger.debug "Search params: query=#{params[:query]}, start_date=#{params[:start_date]}, end_date=#{params[:end_date]}"
   end
 
   # Action pour afficher le formulaire de création d'une nouvelle voiture
