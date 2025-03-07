@@ -130,8 +130,32 @@
   </div>
 </div>
 
+
 <%= render "shared/footer" %>
 
 <!-- Bouton pour voir les réservations -->
 <%# <div class="text-center my-4">
   <%= link_to '📅 View Reservations', reservations_path, class: 'btn btn-primary btn-lg' %>
+
+<!-- Ajoutez ce bouton dans votre vue index -->
+<div class="add-car-button-container">
+  <button class="btn btn-primary add-car-btn" data-action="click->car-modal#open">
+    <i class="fas fa-plus-circle"></i> Add a new car
+  </button>
+</div>
+
+<!-- Modal pour le formulaire d'ajout de voiture -->
+<div id="car-modal" class="modal fade" data-controller="car-modal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add a new car</h5>
+        <button type="button" class="btn-close" data-action="click->car-modal#close" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Le formulaire sera chargé ici -->
+        <div data-car-modal-target="formContainer"></div>
+      </div>
+    </div>
+  </div>
+</div>

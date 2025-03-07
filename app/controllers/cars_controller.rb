@@ -29,7 +29,12 @@ class CarsController < ApplicationController
   # Action pour afficher le formulaire de création d'une nouvelle voiture
   # GET /cars/new
   def new
-    @car = Car.new  # Initialise un nouvel objet Car pour le formulaire
+    @car = Car.new
+    
+    respond_to do |format|
+      format.html
+      format.turbo_stream { render partial: "form", locals: { car: @car } }
+    end
   end
 
   # Action pour afficher les détails d'une voiture spécifique
@@ -42,20 +47,19 @@ class CarsController < ApplicationController
   # Action pour créer une nouvelle voiture
   # POST /cars
    def create
-  @car = Car.new(car_params)
-  @car.user = current_user if user_signed_in?
+    @car = Car.new(car_params)
+    @car.user = current_user
 
-  respond_to do |format|
-    if @car.save
-      format.html { redirect_to rentals_path(tab: "loueur"), notice: "Car added successfully!" }
-      format.json { render json: @car, status: :created }
-    else
-      flash.now[:alert] = "There were errors in your submission. Please check the form."
-      format.html { render :new, status: :unprocessable_entity }
-      format.json { render json: @car.errors, status: :unprocessable_entity }
+    respond_to do |format|
+      if @car.save
+        format.html { redirect_to cars_path, notice: "Car was successfully created." }
+        format.json { render json: { success: true, redirect: cars_path }, status: :created }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: { success: false, errors: @car.errors }, status: :unprocessable_entity }
+      end
     end
   end
-end
 
   # Action pour afficher le formulaire d'édition d'une voiture
   # GET /cars/:id/edit
@@ -131,10 +135,50 @@ end
     render json: @markers
   end
 
+  def validate_step
+    @car = Car.new(car_params)
+    
+    # Valider uniquement les champs de l'étape actuelle
+    step = params[:step].to_i
+    fields_to_validate = case step
+                         when 0
+                           [:phase, :km, :year]
+                         when 1
+                           [:price, :location]
+                         when 2
+                           [:photos, :description]
+                         end
+    
+    valid = fields_to_validate.all? { |field| @car.valid?(field) }
+    
+    render json: {
+      valid: valid,
+      errors: @car.errors.messages.slice(*fields_to_validate)
+    }
+  end
+
+  def save_draft
+    if params[:car_id].present?
+      @car = Car.find(params[:car_id])
+      @car.assign_attributes(car_params)
+    else
+      @car = Car.new(car_params)
+      @car.user = current_user
+      @car.draft = true
+    end
+    
+    if @car.save(validate: false)  # Ne pas valider pour permettre les sauvegardes partielles
+      render json: { success: true, car_id: @car.id }
+    else
+      render json: { success: false, errors: @car.errors.full_messages }
+    end
+  end
+
   private
     # Méthode privée pour filtrer les paramètres autorisés
     # Cette méthode est utilisée pour prévenir les attaques de type mass assignment
     def car_params
+      # Assurez-vous que tous les paramètres nécessaires sont autorisés
       params.require(:car).permit(:phase, :description, :year, :km, :price, :location, images: [])
     end
 end
