@@ -3,26 +3,25 @@
   <div class="image-container">
     <div class="header">
     </div>
-    <div class="search-bar-container ">
-      <form action="/search" method="get" class="search-form">
-        <input type="text" name="query" placeholder="Where do I want my multipla..." required>
-        <%= link_to cars_path do %>
-          <div class="search-icon"></div>
+    <div class="search-bar-container">
+      <div class="search-container" data-controller="home-search" >
+        <%= form_tag cars_path, method: :get, class: "search-form", data: { home_search_target: "form" } do %>
+          <div class="search-input-container" style="display: contents">
+            <%= text_field_tag :query, 
+              params[:query], 
+              class: "search-input", 
+              placeholder: "Where do I want my Multipla?",
+              data: { home_search_target: "location" } 
+            %>
+            <button type="submit" class="search-icon">
+            </button>
+          </div>
         <% end %>
-      </form>
+      </div>
 
 
 
-      <!-- <div class="calendar-container">
-        <div class="calendar-wrapper">
-          <label for="start_date">Start</label>
-          <input type="date" id="start_date" name="start_date" required>
-        </div>
-        <div class="calendar-wrapper">
-          <label for="end_date">End</label>
-          <input type="date" id="end_date" name="end_date" required>
-        </div>
-      </div> -->
+      
     </div>
   </div>
   <div class="footer">

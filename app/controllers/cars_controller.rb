@@ -62,7 +62,7 @@ class CarsController < ApplicationController
     
     # Ajouter un log pour le débogage
     Rails.logger.debug "Filtered cars count: #{@cars.count}"
-    Rails.logger.debug "Markers: #{@markers.inspect}"
+    Rails.logger.debug "Search params: query=#{params[:query]}, start_date=#{params[:start_date]}, end_date=#{params[:end_date]}"
   end
 
   # Action pour afficher le formulaire de création d'une nouvelle voiture

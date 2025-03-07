@@ -59,49 +59,7 @@
           <%= render "form", car: @car %>
         </div>
       </div>
-    </div>
-  </div>
-
-  <div class="filters-section">
-    <div class="filters-container" data-controller="filters">
-      <div class="filter-buttons">
-        <button data-action="click->filters#togglePrice" class="filter-button">
-          <i class="fi fi-ts-money-bill-wave"></i> Price <i class="fi fi-sr-angle-small-down"></i>
-        </button>
-        <button data-action="click->filters#toggleKm" class="filter-button">
-          <i class="fi fi-ts-road"></i> Kilometers <i class="fi fi-sr-angle-small-down"></i>
-        </button>
-        <button data-action="click->filters#togglePhase" class="filter-button">
-          <i class="fi fi-ts-car"></i> Phase <i class="fi fi-sr-angle-small-down"></i>
-        </button>
-        <button data-action="click->filters#toggleYear" class="filter-button">
-          <i class="fi fi-ts-calendar"></i> Year <i class="fi fi-br-angle-small-down"></i>
-        </button>
-      </div>
-
-      <%= form_tag cars_path, method: :get, class: "filters-form" do %>
-        <div data-filters-target="priceFilter" class="filter-panel d-none">
-          <h4>Price</h4>
-          <%= range_field_tag :price_min, params[:price_min], min: 0, max: 500, class: "range-slider" %>
-          <span class="price-value"><%= params[:price_min] || 0 %>€ - 500€</span>
-        </div>
-
-        <div data-filters-target="kmFilter" class="filter-panel d-none">
-          <h4>Kilometers</h4>
-          <%= range_field_tag :km_min, params[:km_min], min: 0, max: 100000, class: "range-slider" %>
-          <span class="km-value"><%= params[:km_min] || 0 %> km - 100,000 km</span>
-        </div>
-
-        <div data-filters-target="phaseFilter" class="filter-panel d-none">
-          <h4>Phase</h4>
-          <%= select_tag :phase, options_for_select(['New', 'Used'], params[:phase]), include_blank: true, class: "form-control" %>
-        </div>
-
-        <div data-filters-target="yearFilter" class="filter-panel d-none">
-          <h4>Year</h4>
-          <%= select_tag :year, options_for_select((2000..Date.today.year).to_a.reverse, params[:year]), include_blank: true, class: "form-control" %>
-        </div>
-      <% end %>
+    
     </div>
   </div>
 
