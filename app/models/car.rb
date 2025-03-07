@@ -7,7 +7,7 @@ class Car < ApplicationRecord
   validates :phase, presence: { message: "must be provided" }
   validates :description, presence: { message: "cannot be blank" }
   validates :year, presence: { message: "must be provided" },
-                  numericality: { only_integer: true, greater_than: 1900, less_than_or_equal_to: -> { Date.current.year + 1 }, message: "must be a valid year" }
+                  numericality: { only_integer: true, greater_than_or_equal_to: 1900, less_than_or_equal_to: -> { Date.today.year }, message: "must be a valid year" }
   validates :km, presence: { message: "must be provided" },
                 numericality: { only_integer: true, greater_than_or_equal_to: 0, message: "must be a positive number" }
   validates :price, presence: { message: "must be provided" },
