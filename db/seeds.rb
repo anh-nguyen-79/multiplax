@@ -25,7 +25,7 @@ Yannick = User.create!(email: "yannick@gmail.com", password: "password4")
 cars = [
   { description: "Voiture 1", user_id: Ben.id, km: 17000000, year: 2022, price: 20000, location: "16 rue de la paix, Paris", phase: "Rocket multipla" },
   { description: "Voiture 2", user_id: Anh.id, km: 15000000, year: 2020, price: 21000, location: "12 rue du lac, Annecy", phase: "Star multipla" },
-  { description: "Superbe multi plat avec une belle piscine", user_id: Antoine.id, km: 1245, year: 2021, price: 250, location: "2 Quai du Port, 13002 Marseille", phase: "Multipool" },
+  { description: "Superbe multipla avec une belle piscine", user_id: Antoine.id, km: 1245, year: 2021, price: 250, location: "2 Quai du Port, 13002 Marseille", phase: "Multipool" },
   { description: "Voiture 4", user_id: Yannick.id, km: 3670, year: 2004, price: 175, location: "15 Rue Royale, 74000 Annecy", phase: "Multisnow" },
   { description: "Voiture 5", user_id: Ben.id, km: 60000, year: 2008, price: 214, location: "45 Boulevard Longchamp, 13001 Marseille", phase: "Multitruck" },
   { description: "Voiture 6", user_id: Anh.id, km: 126000, year: 2000, price: 205, location: "10 Rue de Rivoli, 75004 Paris", phase: "Multi pkm" },
