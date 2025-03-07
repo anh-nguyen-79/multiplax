@@ -44,7 +44,6 @@
     border-radius: 8px;
     border: 1px solid #ddd;
     transition: all 0.3s ease;
-
     font-size: 16px;
     
     &[name="query"] {
@@ -57,7 +56,6 @@
       flex: 1;
     }
     
-
     &:focus {
       border-color: rgb(160, 155, 255);
       box-shadow: 0 0 0 0.2rem rgba(160, 155, 255, 0.25);
@@ -73,7 +71,6 @@
     background-color: rgb(160, 155, 255);
     border-color: rgb(160, 155, 255);
     transition: all 0.3s ease;
-
     font-size: 16px;
     display: flex;
     align-items: center;
@@ -81,13 +78,12 @@
     
     i {
       margin-right: 8px;
-
-
+    }
+    
     &:hover {
       background-color: rgb(217, 215, 255);
       border-color: rgb(217, 215, 255);
       transform: translateY(-2px);
-
     }
   }
 }
