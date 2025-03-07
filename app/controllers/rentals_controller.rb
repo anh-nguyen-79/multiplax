@@ -22,7 +22,9 @@ class RentalsController < ApplicationController
   def create
     @car = Car.find_by(id: rental_params[:car_id])
     unless @car
-      redirect_to cars_path, alert: "Car not found!" and return
+
+      redirect_to cars_path, alert: "🚨 Car not found !" and return
+
     end
 
     @rental = Rental.new(rental_params)
