@@ -16,6 +16,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 550px;
 }
 
 .location-search-bar {
@@ -25,7 +26,7 @@
   align-items: center;
   flex: 1;
   margin-right: 20px;
-  
+
   .form-control {
     flex: 1;
     min-width: 150px;
@@ -33,13 +34,13 @@
     border-radius: 8px;
     border: 1px solid #ddd;
     transition: all 0.3s ease;
-    
+
     &:focus {
       border-color: #4CAF50;
       box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
     }
   }
-  
+
   .search-btn {
     padding: 12px 24px;
     margin: 10px;
@@ -47,7 +48,7 @@
     background-color: rgb(160, 155, 255);
     border-color: rgb(160, 155, 255);
     transition: all 0.3s ease;
-    
+
     &:hover {
       background-color: rgb(217, 215, 255);
       border-color: rgb(217, 215, 255);
@@ -62,7 +63,7 @@
   background-color: #f8f9fa;
   border-radius: 8px;
   border-left: 4px solid #4CAF50;
-  
+
   h3 {
     margin: 0;
     font-size: 18px;
@@ -83,10 +84,10 @@
   border-radius: 8px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   z-index: 1000;
-  
+
   .alert-danger {
     margin-bottom: 15px;
-    
+
     ul {
       margin-bottom: 0;
       padding-left: 20px;
@@ -146,4 +147,4 @@
     background-color: rgba(0, 0, 0, 0.1); // Ajoute un léger effet au survol
     color: #495057; // Change la couleur du texte au survol
   }
-} 
+}
