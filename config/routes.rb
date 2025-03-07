@@ -24,22 +24,13 @@ Rails.application.routes.draw do
       get :nearby
     end
   end
-  resources :rentals, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
+  resources :rentals do
     member do
-      patch :cancel  # 🚨 Cette route attend une requête PATCH, pas GET
+      patch :cancel # Route pour annuler une réservation
+      patch :validate  # Route pour valider une réservation
+      patch :reject    # Route pour rejeter une réservation
     end
   end
-
-  # Définition des routes pour les voitures
-  # Les actions autorisées sont:
-  # - index: Afficher la liste de toutes les voitures
-  # - show: Afficher les détails d'une voiture spécifique
-  # - new: Afficher le formulaire de création d'une nouvelle voiture
-  # - create: Traiter la soumission du formulaire de création
-  # - edit: Afficher le formulaire d'édition d'une voiture existante
-  # - update: Traiter la soumission du formulaire d'édition
-  # - destroy: Supprimer une voiture existante
-
 
   # Route explicite vers la page d'accueil
   get '/home', to: 'pages#home'

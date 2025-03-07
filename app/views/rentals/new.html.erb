@@ -11,11 +11,13 @@
           <h1 class="text-center text-dark fw-bold mb-4">Reservation</h1>
 
           <!-- Message d'erreur -->
-          <% if flash[:alert] %>
-            <div class="alert alert-danger text-center fw-bold">
-              <%= flash[:alert] %>
-            </div>
-          <% end %>
+         <% if flash[:notice] || flash[:alert] %>
+          <div class="alert <%= flash[:notice] ? 'alert-success' : 'alert-danger' %> position-fixed bottom-0 end-0 p-3 shadow-lg fade show" id="toaster" role="alert">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <%= flash[:notice] || flash[:alert] %>
+          </div>
+        <% end %>
+
 
 
           <!-- Formulaire de réservation -->
