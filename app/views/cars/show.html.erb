@@ -63,10 +63,12 @@
 
   <div class="d-flex justify-content-center gap-3 mt-4">
   <%= link_to 'Retour', cars_path, class: 'btn btn-secondary w-auto' %>
+  <% if @car.user!=current_user %>
   <%= link_to 'Rent now', new_rental_path(car_id: @car.id), class: 'btn-rainbow w-auto' %>
   <!-- <button type="button" class="btn-rainbow w-auto" data-bs-toggle="modal" data-bs-target="#rentalModal">
     Rent now
   </button> -->
+  <% end %>
 </div>
 
 <!-- <div class="modal fade" id="rentalModal" tabindex="-1" aria-labelledby="rentalModalLabel" aria-hidden="true">
