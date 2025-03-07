@@ -65,7 +65,7 @@
   <%= link_to 'Retour', cars_path, class: 'btn btn-secondary w-auto' %>
 
   <% if @car.user!=current_user %>
-  <%= link_to 'Rent now', new_rental_path(car_id: @car.id), class: 'btn-rainbow w-auto' %>
+  <%= link_to 'Rent now', new_car_rental_path(car_id: @car.id), class: 'btn-rainbow w-auto' %>
   <!-- <button type="button" class="btn-rainbow w-auto" data-bs-toggle="modal" data-bs-target="#rentalModal">
     Rent now
   </button> -->
@@ -113,7 +113,7 @@
     </div>
   </div>
 </div> -->
-<%= render "shared/footer" %>
+
 
 <style>
   .btn-rainbow {
@@ -145,4 +145,3 @@
     100% { background-position: 400%; }
   }
 </style>
-

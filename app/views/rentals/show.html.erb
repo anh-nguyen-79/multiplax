@@ -55,11 +55,11 @@
                         <div class="d-flex justify-content-evenly">
                           <%= link_to "Back", cars_path, class: "btn btn-secondary w-30" %>
 
-                          <% unless @rental.status == "canceled" %>
+                          <% unless @rental.status == "canceled"  %>
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
                           <% end %>
 
-                          <% if @rental.status == "confirmed" %>
+                          <% if @rental.status == "confirmed"  || @rental.status == "pending"%>
                             <button class="btn btn-danger w-30" data-bs-toggle="modal" data-bs-target="#cancelModal">Cancel</button>
                           <% end %>
                         </div>
@@ -79,7 +79,7 @@
       <div class="modal-body"> Are you sure you want to cancel this booking? </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-        <%= link_to "Yes, cancel", cancel_rental_path(@rental), method: :patch, class: "btn btn-danger" %>
+        <%= link_to "Yes, cancel", cancel_rental_path(@rental), data: {turbo_method: :patch}, class: "btn btn-danger" %>
       </div>
     </div>
   </div>
@@ -122,12 +122,7 @@
 </div>
 
 <!-- ✅ UX : Boutons "Reject" & "Validate" en ligne -->
-<% if @rental.status == "pending" %>
-  <div class="d-flex justify-content-center mt-4">
-    <%= button_to "✔ Validate", validate_rental_path(@rental), method: :patch, class: "btn btn-success mx-2" %>
-    <%= button_to "✖ Reject", reject_rental_path(@rental), method: :patch, class: "btn btn-danger mx-2" %>
-  </div>
-<% end %>
+
 
 <!-- Toaster pour les notifications -->
 
@@ -141,11 +136,10 @@
 
 
 
-</div> -->
+</div>
 
 <style>
 .card {
   background: transparent;
 }
 </style>
-

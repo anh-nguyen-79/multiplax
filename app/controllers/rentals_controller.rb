@@ -61,7 +61,7 @@ class RentalsController < ApplicationController
   end
 
   def cancel
-    if @rental.status == "confirmed" 
+    if @rental.status == "confirmed" || @rental.status == "pending"
       @rental.update(status: "canceled")
       flash[:notice] = "✅ Booking  canceled!"
     else
