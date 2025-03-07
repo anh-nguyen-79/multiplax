@@ -11,7 +11,7 @@
 
 <div class="home-container">
   <%= render 'shared/background' %>
-  
+
   <div class="search-section">
     <div class="search-container">
       <div class="location-search-bar">
@@ -31,9 +31,10 @@
             class: "form-control",
             placeholder: "End Date"
           %>
+          <!-- faut avoir summit bouton? -->
         <% end %>
       </div>
-      
+
       <div data-controller="toggle">
         <% if user_signed_in? %>
           <button type="button" class="btn-rainbow" data-action="click->toggle#fire">
@@ -42,7 +43,7 @@
         <% else %>
           <%= link_to 'Add a car', new_user_session_path, class: "btn-rainbow" %>
         <% end %>
-        
+
         <div data-toggle-target="togglableElement" class="car-form-container d-none">
           <%= render "form", car: @car %>
         </div>
@@ -66,25 +67,25 @@
           <i class="fi fi-ts-calendar"></i> Year <i class="fi fi-br-angle-small-down"></i>
         </button>
       </div>
-      
+
       <%= form_tag cars_path, method: :get, class: "filters-form" do %>
         <div data-filters-target="priceFilter" class="filter-panel d-none">
           <h4>Price</h4>
           <%= range_field_tag :price_min, params[:price_min], min: 0, max: 500, class: "range-slider" %>
           <span class="price-value"><%= params[:price_min] || 0 %>€ - 500€</span>
         </div>
-        
+
         <div data-filters-target="kmFilter" class="filter-panel d-none">
           <h4>Kilometers</h4>
           <%= range_field_tag :km_min, params[:km_min], min: 0, max: 100000, class: "range-slider" %>
           <span class="km-value"><%= params[:km_min] || 0 %> km - 100,000 km</span>
         </div>
-        
+
         <div data-filters-target="phaseFilter" class="filter-panel d-none">
           <h4>Phase</h4>
           <%= select_tag :phase, options_for_select(['New', 'Used'], params[:phase]), include_blank: true, class: "form-control" %>
         </div>
-        
+
         <div data-filters-target="yearFilter" class="filter-panel d-none">
           <h4>Year</h4>
           <%= select_tag :year, options_for_select((2000..Date.today.year).to_a.reverse, params[:year]), include_blank: true, class: "form-control" %>
@@ -104,14 +105,14 @@
                 <small>/day</small>
               </div>
             </div>
-            
+
             <div class="car-info">
               <h3><%= car.phase %></h3>
               <div class="car-details">
                 <span><i class="fas fa-map-marker-alt"></i> <%= car.location %></span>
               </div>
             </div>
-            
+
             <%= link_to "", car_path(car), class: "card-link" %>
           </div>
         <% end %>
@@ -128,6 +129,9 @@
     </div>
   </div>
 </div>
+
+
+<%= render "shared/footer" %>
 
 <!-- Bouton pour voir les réservations -->
 <%# <div class="text-center my-4">

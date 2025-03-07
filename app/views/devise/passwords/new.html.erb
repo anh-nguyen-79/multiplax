@@ -1,6 +1,8 @@
+<%= render "shared/navbar" %>
+<%= render 'shared/background' %>
+
 <div class="container">
-  <div class="row">
-    <div class="col-md-6">
+  <div class="d-flex flex-column align-items-center justify-content-center" style="height: calc(100vh - 116px)">
       <h2>Forgot your password?</h2>
 
 <%= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
@@ -10,6 +12,7 @@
     <%= f.input :email,
                 required: true,
                 autofocus: true,
+                label_html: { class: "text-white" },
                 input_html: { autocomplete: "email" } %>
   </div>
 
@@ -21,4 +24,4 @@
     <%= render "devise/shared/links" %>
     </div>
   </div>
-</div>
+<%= render "shared/footer" %>
