@@ -4,7 +4,7 @@
 <div class="container mt-5 ">
   <div class="row justify-content-center">
     <div class="col-md-8">
-      <div class="card shadow-lg p-4 rounded-4">
+      <div class="card shadow-lg p-4 rounded-4" data-controller="datepicker">
         <%= simple_form_for [@car, @rental], html: { class: 'card-body' } do |f| %>
 
           <!-- Titre -->
@@ -17,16 +17,20 @@
             </div>
           <% end %>
 
-          <div data-controller="datepicker" >
-            <%= f.input :start_date, label: "Pick-up Date", as: :string, input_html: { data: { datepicker_target: "start" } } %>
-            <%= f.input :end_date, as: :hidden, input_html: { data: { datepicker_target: "end" } } %>
+          <div>
+            <%= f.input :range do %>
+              <%= text_field_tag :range, nil, class: "form-control string required", data: { datepicker_target: "range" } %>
+            <% end %>
+
+            <%= f.input :start_date, as: :hidden, input_html: { data: { datepicker_target: "startDate" } }  %>
+            <%= f.input :end_date, as: :hidden, input_html: { data: { datepicker_target: "endDate" } } %>
           </div>
 
           <!-- Détails du prix -->
           <div class="bg-light p-4 rounded shadow-sm border">
-            <p class="mb-2 text-secondary"><strong> Price per day:</strong> <span data-rental-price-target="price"><%= @car.price %></span> €</p>
-            <p class="mb-2 text-secondary"><strong> Number of days :</strong> <span data-rental-price-target="days">0</span> jours</p>
-            <p class="fw-bold text-secondary"><strong> Total :</strong> <span data-rental-price-target="totalPrice">Calculation in progress...</span> €</p>
+            <p class="mb-2 text-secondary"><strong> Price per day:</strong> <span data-datepicker-target="price"><%= @car.price %></span> €</p>
+            <p class="mb-2 text-secondary"><strong> Number of days :</strong> <span data-datepicker-target="days">0</span> jours</p>
+            <p class="fw-bold text-secondary"><strong> Total :</strong> <span data-datepicker-target="totalPrice">Calculation in progress...</span> €</p>
           </div>
 
             <!-- Boutons d'action -->
