@@ -14,7 +14,7 @@ private
                                 .where.not(id: id)  # Exclut cette réservation si elle existe déjà (utile pour l'update)
                                 .where("start_date < ? AND end_date > ?", end_date, start_date)  # Vérifie le chevauchement
     if overlapping_rentals.exists?
-      errors.add(:base, "🚨 Cette voiture est déjà réservée sur cette période !")
+      errors.add(:base, "This car is already booked for this period!")
     end
   end
 end
